@@ -1,0 +1,26 @@
+{
+    "name": "gamebay/rksv",
+
+    "description": "Austrian RKSV implementation with PrimeSign online certificate signing service",
+    "type": "library",
+    "require": {
+        "laravel/framework": "5.5.*",
+        "guzzlehttp/guzzle": "6.3.*",
+        "simplesoftwareio/simple-qrcode": "2.0.*"
+    },
+    "require-dev": {
+    },
+    "license": "GNU v3.0",
+    "authors": [
+        {
+            "name": "Nino Korent",
+            "email": "nino.korent@gamebay.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Gamebay\\Rksv\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
