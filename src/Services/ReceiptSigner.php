@@ -55,45 +55,49 @@ class ReceiptSigner
 
     /**
      * Sign normal receipt; obtain signature and QR code
+     * @param ReceiptData|null $receiptData
      */
-    public function normalSign()
+    public function normalSign(ReceiptData $receiptData = null)
     {
         $signInterface = $this->getSignService(self::NORMAL_SIGN_TYPE);
 
-        $this->signature = $signInterface->sign($this->receiptData);
+        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
         $this->qr = $this->generateQRCode($this->signature);
     }
 
     /**
      * Sign cancel receipt; obtain signature and QR code
+     * @param ReceiptData|null $receiptData
      */
-    public function cancelSign()
+    public function cancelSign(ReceiptData $receiptData = null)
     {
         $signInterface = $this->getSignService(self::CANCEL_SIGN_TYPE);
 
-        $this->signature = $signInterface->sign($this->receiptData);
+        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
         $this->qr = $this->generateQRCode($this->signature);
     }
 
     /**
      * Sign training receipt; obtain signature and QR code
+     * @param ReceiptData|null $receiptData
      */
-    public function trainingSign()
+    public function trainingSign(ReceiptData $receiptData = null)
     {
         $signInterface = $this->getSignService(self::TRAINING_SIGN_TYPE);
 
-        $this->signature = $signInterface->sign($this->receiptData);
+        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
         $this->qr = $this->generateQRCode($this->signature);
     }
 
     /**
      * Sign null (first) receipt; obtain signature and QR code
+     * @param ReceiptData|null $receiptData
      */
-    public function nullSign()
+    public function nullSign(ReceiptData $receiptData = null)
     {
         $signInterface = $this->getSignService(self::NULL_SIGN_TYPE);
 
-        $this->signature = $signInterface->sign($this->receiptData);
+        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
         $this->qr = $this->generateQRCode($this->signature);
     }
 
