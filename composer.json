@@ -4,6 +4,7 @@
     "description": "Austrian RKSV implementation with PrimeSign online certificate signing service",
     "type": "library",
     "require": {
+        "php": "7.1",
         "laravel/framework": "5.5.*",
         "guzzlehttp/guzzle": "6.3.*",
         "simplesoftwareio/simple-qrcode": "2.0.*"
