@@ -22,13 +22,6 @@ class ReceiptSigner
     const TRAINING_SIGN_TYPE = 'training';
     const NULL_SIGN_TYPE = 'null';
 
-//    CONST SIGN_TYPE = [
-//        self::CANCEL_SIGN_TYPE => 'U1RP',
-//        self::TRAINING_SIGN_TYPE => 'VFJB',
-//        self::NORMAL_SIGN_TYPE => '',
-//        self::NULL_SIGN_TYPE => '',
-//    ];
-
     /**
      * ReceiptSigner constructor.
      * @param ReceiptData $receiptData
