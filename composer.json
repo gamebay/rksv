@@ -16,6 +16,10 @@
         {
             "name": "Nino Korent",
             "email": "nino.korent@gamebay.io"
+        },
+        {
+            "name": "Sandro Lovnički",
+            "email": "sandro.lovnicki@gamebay.io"
         }
     ],
     "autoload": {
