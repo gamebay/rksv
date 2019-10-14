@@ -19,20 +19,42 @@ class ReceiptData
         $this->items = [];
     }
 
-    public static function withData($cashboxId, $receiptId, $receiptTimestamp, $items, $previousReceiptCompactSignature)
+    public static function withData(
+        string $cashboxId,
+        string $receiptId,
+        \DateTime $receiptTimestamp,
+        array $items,
+        string $previousReceiptCompactSignature)
     {
         $self = new self();
 
         $self->cashboxId = $cashboxId;
         $self->receiptId = $receiptId;
         $self->receiptTimestamp = $receiptTimestamp;
-        $self->items = $items;
+        if ($self->validateItemsArray($items)) {
+            $self->items = $items;
+        } else {
+            // TODO error handler...
+            dd('wrong items');
+        }
         $self->previousReceiptCompactSignature = $previousReceiptCompactSignature;
 
         return $self;
     }
 
-    public function setCashboxId($id)
+    private function validateItem($item)
+    {
+        return isset($item['net']) && is_numeric($item['net'])
+            && isset($item['tax']) && is_numeric($item['tax'])
+            && $item['tax'] >=0 && $item['tax'] <= 100;
+    }
+
+    public function validateItemsArray($items)
+    {
+        return count($items) == count(array_filter($items, 'validateItem'));
+    }
+
+    public function setCashboxId(string $id)
     {
         $this->cashboxId = $id;
     }
@@ -41,7 +63,7 @@ class ReceiptData
         return $this->cashboxId;
     }
 
-    public function setReceiptId($id)
+    public function setReceiptId(string $id)
     {
         $this->receiptId = $id;
     }
@@ -50,14 +72,9 @@ class ReceiptData
         return $this->receiptId;
     }
 
-    public function setReceiptTimestamp($timestamp)
+    public function setReceiptTimestamp(\DateTime $timestamp)
     {
-        try {
-            $timestamp = Carbon::parse($timestamp);
-        } catch (\Exception $e) {
-            dd('Not a valid timestamp: ' . $e);
-        }
-        $this->receiptTimestamp = $timestamp->toDateTimeString();
+        $this->receiptTimestamp = $timestamp->format('Y-m-d H:i:s');
     }
     public function getReceiptTimestamp()
     {
@@ -66,24 +83,29 @@ class ReceiptData
 
     public function setItems(array $items)
     {
-        foreach ($items as $item) {
-            // TODO
-            if (!count($item) != 2 || !isset($item['net']) || !isset($item['tax']))
-                dd('Wrong item: ' . $item);
+        if ($this->validateItemsArray($items)) {
+            $this->items = $items;
+        } else {
+            // TODO error handler...
+            dd('wrong item');
         }
-        $this->items = $items;
     }
     public function getItems()
     {
         return $this->items;
     }
-    public function addItem($net, $tax)
+    public function addItem(float $net, float $tax)
     {
-        // TODO
-        if (!is_numeric($net) || !is_numeric($tax) || $tax >= 100)
-            dd('Wrong item');
-
-        $this->items[] = [ 'net' => $net, 'tax' => $tax ];
+        $item = [
+            'net' => $net,
+            'tax' => $tax
+        ];
+        if ($this->validateItem($item)) {
+            $this->items[] = $item;
+        } else {
+            // TODO error handler...
+            dd('wrong item');
+        }
     }
     public function removeItem($net, $tax)
     {
@@ -99,7 +121,7 @@ class ReceiptData
         }
     }
 
-    public function setPreviousReceiptCompactSignature($signature)
+    public function setPreviousReceiptCompactSignature(string $signature)
     {
         $this->previousReceiptCompactSignature = $signature;
     }
