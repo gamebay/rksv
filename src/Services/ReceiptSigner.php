@@ -4,6 +4,7 @@
 namespace Services;
 
 use Models\ReceiptData;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class ReceiptSigner
@@ -38,7 +39,7 @@ class ReceiptSigner
 
     public function generateQRCode($signature)
     {
-        return QRCodeService::create($signature);
+        return QrCode::generate($signature);
     }
 
     public function normalSign()
