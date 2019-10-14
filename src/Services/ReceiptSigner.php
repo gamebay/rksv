@@ -26,11 +26,11 @@ class ReceiptSigner
      * ReceiptSigner constructor.
      * @param ReceiptData $receiptData
      */
-    public function __construct(ReceiptData $receiptData)
+    public function __construct(ReceiptData $receiptData = null)
     {
-        $this->receiptData = $receiptData;
-        $this->signature = null;
-        $this->qr = null;
+        if ($receiptData != null) {
+            $this->receiptData = $receiptData;
+        }
     }
 
     /**
@@ -95,6 +95,22 @@ class ReceiptSigner
 
         $this->signature = $signInterface->sign($this->receiptData);
         $this->qr = $this->generateQRCode($this->signature);
+    }
+
+    /**
+     * @param ReceiptData $receiptData
+     */
+    public function setReceiptData(ReceiptData $receiptData)
+    {
+        $this->receiptData = $receiptData;
+    }
+
+    /**
+     * @return ReceiptData
+     */
+    public function getReceiptData()
+    {
+        return $this->receiptData;
     }
 
     /**
