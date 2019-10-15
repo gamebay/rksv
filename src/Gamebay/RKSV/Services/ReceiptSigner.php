@@ -4,7 +4,7 @@
 namespace Gamebay\RKSV\Services;
 
 use Gamebay\RKSV\ErrorHandlers\Exceptions\NoReceiptDataException;
-use Models\ReceiptData;
+use Gamebay\RKSV\Models\ReceiptData;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -62,7 +62,7 @@ class ReceiptSigner
     public function normalSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
+            throw new NoReceiptDataException();
         }
 
         $signInterface = $this->getSignService(self::NORMAL_SIGN_TYPE);
@@ -79,7 +79,7 @@ class ReceiptSigner
     public function cancelSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
+            throw new NoReceiptDataException();
         }
 
         $signInterface = $this->getSignService(self::CANCEL_SIGN_TYPE);
@@ -96,7 +96,7 @@ class ReceiptSigner
     public function trainingSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
+            throw new NoReceiptDataException();
         }
 
         $signInterface = $this->getSignService(self::TRAINING_SIGN_TYPE);
@@ -113,7 +113,7 @@ class ReceiptSigner
     public function nullSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
+            throw new NoReceiptDataException();
         }
 
         $signInterface = $this->getSignService(self::NULL_SIGN_TYPE);

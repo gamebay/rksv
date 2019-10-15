@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
  */
 class InvalidItemException extends RksvException
 {
+    const MESSAGE = "Item must be an array of form ['net'=>X,'tax'=>Y], where 0<=Y<=100";
 
     /**
      * InvalidItemException constructor.
@@ -19,7 +20,9 @@ class InvalidItemException extends RksvException
      * @param int $code
      * @param null $previous
      */
-    public function __construct($message = "Invalid item array constructed. ", $code = Response::HTTP_UNPROCESSABLE_ENTITY, $previous = null)
+    public function __construct($message = self::MESSAGE,
+                                $code = Response::HTTP_UNPROCESSABLE_ENTITY,
+                                $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

@@ -141,7 +141,7 @@ class ReceiptData
         if ($this->validateItemsArray($items)) {
             $this->items = $items;
         } else {
-            throw new InvalidItemException("item must be an array of form ['net'=>X,'tax'=>Y]", 2);
+            throw new InvalidItemException();
         }
     }
 
@@ -170,7 +170,7 @@ class ReceiptData
         if ($this->validateItem($item)) {
             $this->items[] = $item;
         } else {
-            throw new InvalidItemException("item must be an array of form ['net'=>X,'tax'=>Y]", 2);
+            throw new InvalidItemException();
         }
     }
 
