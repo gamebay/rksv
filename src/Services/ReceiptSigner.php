@@ -59,6 +59,10 @@ class ReceiptSigner
      */
     public function normalSign(ReceiptData $receiptData = null)
     {
+        if ($receiptData == null && $this->receiptData == null) {
+            // TODO error handler
+        }
+
         $signInterface = $this->getSignService(self::NORMAL_SIGN_TYPE);
 
         $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
@@ -71,6 +75,10 @@ class ReceiptSigner
      */
     public function cancelSign(ReceiptData $receiptData = null)
     {
+        if ($receiptData == null && $this->receiptData == null) {
+            // TODO error handler
+        }
+
         $signInterface = $this->getSignService(self::CANCEL_SIGN_TYPE);
 
         $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
@@ -83,6 +91,10 @@ class ReceiptSigner
      */
     public function trainingSign(ReceiptData $receiptData = null)
     {
+        if ($receiptData == null && $this->receiptData == null) {
+            // TODO error handler
+        }
+
         $signInterface = $this->getSignService(self::TRAINING_SIGN_TYPE);
 
         $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
@@ -95,6 +107,10 @@ class ReceiptSigner
      */
     public function nullSign(ReceiptData $receiptData = null)
     {
+        if ($receiptData == null && $this->receiptData == null) {
+            // TODO error handler
+        }
+
         $signInterface = $this->getSignService(self::NULL_SIGN_TYPE);
 
         $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
