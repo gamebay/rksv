@@ -3,6 +3,7 @@
 
 namespace Services;
 
+use ErrorHandlers\Exceptions\NoReceiptDataException;
 use Models\ReceiptData;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -56,11 +57,12 @@ class ReceiptSigner
     /**
      * Sign normal receipt; obtain signature and QR code
      * @param ReceiptData|null $receiptData
+     * @throws NoReceiptDataException
      */
     public function normalSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            // TODO error handler
+            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
         }
 
         $signInterface = $this->getSignService(self::NORMAL_SIGN_TYPE);
@@ -72,11 +74,12 @@ class ReceiptSigner
     /**
      * Sign cancel receipt; obtain signature and QR code
      * @param ReceiptData|null $receiptData
+     * @throws NoReceiptDataException
      */
     public function cancelSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            // TODO error handler
+            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
         }
 
         $signInterface = $this->getSignService(self::CANCEL_SIGN_TYPE);
@@ -88,11 +91,12 @@ class ReceiptSigner
     /**
      * Sign training receipt; obtain signature and QR code
      * @param ReceiptData|null $receiptData
+     * @throws NoReceiptDataException
      */
     public function trainingSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            // TODO error handler
+            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
         }
 
         $signInterface = $this->getSignService(self::TRAINING_SIGN_TYPE);
@@ -104,11 +108,12 @@ class ReceiptSigner
     /**
      * Sign null (first) receipt; obtain signature and QR code
      * @param ReceiptData|null $receiptData
+     * @throws NoReceiptDataException
      */
     public function nullSign(ReceiptData $receiptData = null)
     {
         if ($receiptData == null && $this->receiptData == null) {
-            // TODO error handler
+            throw new NoReceiptDataException("use ReceiptSigner@setReceiptData to set it.", 1);
         }
 
         $signInterface = $this->getSignService(self::NULL_SIGN_TYPE);

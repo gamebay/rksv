@@ -4,6 +4,8 @@
 namespace Models;
 
 
+use ErrorHandlers\Exceptions\InvalidItemException;
+
 /**
  * Class ReceiptData
  * @package Models
@@ -26,11 +28,15 @@ class ReceiptData
 
     /**
      * Construct ReceiptData with provided data
+     *
      * @param string $cashboxId
      * @param string $receiptId
      * @param \DateTime $receiptTimestamp
      * @param array $items
      * @param string $previousReceiptCompactSignature
+     *
+     * @throws InvalidItemException
+     *
      * @return ReceiptData
      */
     public static function withData(
@@ -48,8 +54,7 @@ class ReceiptData
         if ($self->validateItemsArray($items)) {
             $self->items = $items;
         } else {
-            // TODO error handler...
-            dd('wrong items');
+            throw new InvalidItemException("item must be an array of form ['net'=>X,'tax'=>Y]", 2);
         }
         $self->previousReceiptCompactSignature = $previousReceiptCompactSignature;
 
@@ -128,14 +133,15 @@ class ReceiptData
 
     /**
      * @param array $items
+     *
+     * @throws InvalidItemException
      */
     public function setItems(array $items)
     {
         if ($this->validateItemsArray($items)) {
             $this->items = $items;
         } else {
-            // TODO error handler...
-            dd('wrong item');
+            throw new InvalidItemException("item must be an array of form ['net'=>X,'tax'=>Y]", 2);
         }
     }
 
@@ -149,8 +155,11 @@ class ReceiptData
 
     /**
      * Add an item with $net,$tax to the $items list
+     *
      * @param float $net
      * @param float $tax
+     *
+     * @throws InvalidItemException
      */
     public function addItem(float $net, float $tax)
     {
@@ -161,8 +170,7 @@ class ReceiptData
         if ($this->validateItem($item)) {
             $this->items[] = $item;
         } else {
-            // TODO error handler...
-            dd('wrong item');
+            throw new InvalidItemException("item must be an array of form ['net'=>X,'tax'=>Y]", 2);
         }
     }
 
