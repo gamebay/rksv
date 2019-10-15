@@ -55,71 +55,61 @@ class ReceiptSigner
     }
 
     /**
-     * Sign normal receipt; obtain signature and QR code
+     * Signs the receiptData with appropriate signer, generates signature and QR code.
+     * @param ReceiptData $receiptData
+     * @param string $signType
+     * @throws NoReceiptDataException
+     */
+    private function sign(ReceiptData $receiptData, string $signType)
+    {
+        if ($receiptData == null && $this->receiptData == null) {
+            throw new NoReceiptDataException();
+        }
+
+        $signInterface = $this->getSignService($signType);
+
+        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
+        $this->qr = $this->generateQRCode($this->signature);
+    }
+
+    /**
+     * Helper for normal sign.
      * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
      */
     public function normalSign(ReceiptData $receiptData = null)
     {
-        if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException();
-        }
-
-        $signInterface = $this->getSignService(self::NORMAL_SIGN_TYPE);
-
-        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
-        $this->qr = $this->generateQRCode($this->signature);
+        $this->sign($receiptData, self::NORMAL_SIGN_TYPE);
     }
 
     /**
-     * Sign cancel receipt; obtain signature and QR code
+     * Helper for cancel/storno sign.
      * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
      */
     public function cancelSign(ReceiptData $receiptData = null)
     {
-        if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException();
-        }
-
-        $signInterface = $this->getSignService(self::CANCEL_SIGN_TYPE);
-
-        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
-        $this->qr = $this->generateQRCode($this->signature);
+        $this->sign($receiptData, self::CANCEL_SIGN_TYPE);
     }
 
     /**
-     * Sign training receipt; obtain signature and QR code
+     * Helper for training sign.
      * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
      */
     public function trainingSign(ReceiptData $receiptData = null)
     {
-        if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException();
-        }
-
-        $signInterface = $this->getSignService(self::TRAINING_SIGN_TYPE);
-
-        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
-        $this->qr = $this->generateQRCode($this->signature);
+        $this->sign($receiptData, self::TRAINING_SIGN_TYPE);
     }
 
     /**
-     * Sign null (first) receipt; obtain signature and QR code
+     * Helper for null/first sign.
      * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
      */
     public function nullSign(ReceiptData $receiptData = null)
     {
-        if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException();
-        }
-
-        $signInterface = $this->getSignService(self::NULL_SIGN_TYPE);
-
-        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
-        $this->qr = $this->generateQRCode($this->signature);
+        $this->sign($receiptData, self::NULL_SIGN_TYPE);
     }
 
     /**
