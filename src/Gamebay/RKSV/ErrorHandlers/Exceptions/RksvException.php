@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ErrorHandlers\Exceptions;
+namespace Gamebay\RKSV\ErrorHandlers\Exceptions;
 
 
 class RksvException extends \Exception

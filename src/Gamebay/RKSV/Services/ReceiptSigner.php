@@ -3,7 +3,7 @@
 
 namespace Gamebay\RKSV\Services;
 
-use ErrorHandlers\Exceptions\NoReceiptDataException;
+use Gamebay\RKSV\ErrorHandlers\Exceptions\NoReceiptDataException;
 use Models\ReceiptData;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 

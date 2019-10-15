@@ -11,7 +11,7 @@ use Throwable;
  * Class InvalidSignTypeException
  * @package Gamebay\RKSV\ErrorHandlers\Exceptions
  */
-class InvalidSignTypeException extends \Exception implements \Throwable
+class InvalidSignTypeException extends RksvException implements \Throwable
 {
 
     /**
@@ -20,7 +20,7 @@ class InvalidSignTypeException extends \Exception implements \Throwable
      * @param int $code
      * @param Throwable|null $previous
      */
-    public function __construct($message = "Invalid receipt sign type", $code = Response::HTTP_UNPROCESSABLE_ENTITY, Throwable $previous = null)
+    public function __construct($message = "Invalid receipt sign type given", $code = Response::HTTP_UNPROCESSABLE_ENTITY, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

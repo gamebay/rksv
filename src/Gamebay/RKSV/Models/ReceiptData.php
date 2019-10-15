@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Models;
+namespace Gamebay\RKSV\Models;
 
 
-use ErrorHandlers\Exceptions\InvalidItemException;
+use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidItemException;
 
 /**
  * Class ReceiptData
@@ -54,7 +54,7 @@ class ReceiptData
         if ($self->validateItemsArray($items)) {
             $self->items = $items;
         } else {
-            throw new InvalidItemException("item must be an array of form ['net'=>X,'tax'=>Y]", 2);
+            throw new InvalidItemException();
         }
         $self->previousReceiptCompactSignature = $previousReceiptCompactSignature;
 
@@ -66,7 +66,7 @@ class ReceiptData
      * @param array $item
      * @return bool
      */
-    private function validateItem($item)
+    private function validateItem(array $item)
     {
         return isset($item['net']) && is_numeric($item['net'])
             && isset($item['tax']) && is_numeric($item['tax'])
@@ -78,7 +78,7 @@ class ReceiptData
      * @param array $items
      * @return bool
      */
-    public function validateItemsArray($items)
+    public function validateItemsArray(array $items)
     {
         return count($items) == count(array_filter($items, 'validateItem'));
     }
