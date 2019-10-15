@@ -12,10 +12,19 @@ use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidItemException;
  */
 class ReceiptData
 {
+    /** @var string $cashboxId */
     private $cashboxId;
+
+    /** @var string $receiptId */
     private $receiptId;
+
+    /** @var \DateTime $receiptTimestamp */
     private $receiptTimestamp;
+
+    /** @var array $items */
     private $items;
+
+    /** @var string $previousReceiptCompactSignature */
     private $previousReceiptCompactSignature;
 
     /**
@@ -35,30 +44,31 @@ class ReceiptData
      * @param array $items
      * @param string $previousReceiptCompactSignature
      *
+     * @return ReceiptData
      * @throws InvalidItemException
      *
-     * @return ReceiptData
      */
-    public static function withData(
+    public function withData(
         string $cashboxId,
         string $receiptId,
         \DateTime $receiptTimestamp,
         array $items,
-        string $previousReceiptCompactSignature)
-    {
-        $self = new self();
+        string $previousReceiptCompactSignature
+    ) {
 
-        $self->cashboxId = $cashboxId;
-        $self->receiptId = $receiptId;
-        $self->receiptTimestamp = $receiptTimestamp;
-        if ($self->validateItemsArray($items)) {
-            $self->items = $items;
+        $receiptData = new $this;
+
+        $receiptData->cashboxId = $cashboxId;
+        $receiptData->receiptId = $receiptId;
+        $receiptData->receiptTimestamp = $receiptTimestamp;
+        if ($this->validateItemsArray($items)) {
+            $receiptData->items = $items;
         } else {
             throw new InvalidItemException();
         }
-        $self->previousReceiptCompactSignature = $previousReceiptCompactSignature;
+        $receiptData->previousReceiptCompactSignature = $previousReceiptCompactSignature;
 
-        return $self;
+        return $receiptData;
     }
 
     /**
@@ -70,7 +80,7 @@ class ReceiptData
     {
         return isset($item['net']) && is_numeric($item['net'])
             && isset($item['tax']) && is_numeric($item['tax'])
-            && $item['tax'] >=0 && $item['tax'] <= 100;
+            && $item['tax'] >= 0 && $item['tax'] <= 100;
     }
 
     /**
