@@ -51,7 +51,7 @@ class ReceiptData
         $self->cashboxId = $cashboxId;
         $self->receiptId = $receiptId;
         $self->receiptTimestamp = $receiptTimestamp;
-        if ($self->validateItemsArray($items)) {
+        if ($self->isValidItemsArray($items)) {
             $self->items = $items;
         } else {
             throw new InvalidItemException();
@@ -66,7 +66,7 @@ class ReceiptData
      * @param array $item
      * @return bool
      */
-    private function validateItem(array $item)
+    public function isValidItem(array $item)
     {
         return isset($item['net']) && is_numeric($item['net'])
             && isset($item['tax']) && is_numeric($item['tax'])
@@ -78,9 +78,14 @@ class ReceiptData
      * @param array $items
      * @return bool
      */
-    public function validateItemsArray(array $items)
+    public function isValidItemsArray(array $items)
     {
-        return count($items) == count(array_filter($items, 'validateItem'));
+        foreach ($this->items as $item) {
+            if (!$this->isValidItem($item)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -138,7 +143,7 @@ class ReceiptData
      */
     public function setItems(array $items)
     {
-        if ($this->validateItemsArray($items)) {
+        if ($this->isValidItemsArray($items)) {
             $this->items = $items;
         } else {
             throw new InvalidItemException();
@@ -167,7 +172,7 @@ class ReceiptData
             'net' => $net,
             'tax' => $tax
         ];
-        if ($this->validateItem($item)) {
+        if ($this->isValidItem($item)) {
             $this->items[] = $item;
         } else {
             throw new InvalidItemException();
