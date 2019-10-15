@@ -25,7 +25,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Gamebay\\Rksv\\": "src/"
+            "Gamebay\\RKSV\\": "src/"
         }
     },
     "minimum-stability": "dev"
