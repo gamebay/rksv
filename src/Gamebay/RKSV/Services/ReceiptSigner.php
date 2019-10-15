@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Services;
+namespace Gamebay\RKSV\Services;
 
 
 class ReceiptSigner

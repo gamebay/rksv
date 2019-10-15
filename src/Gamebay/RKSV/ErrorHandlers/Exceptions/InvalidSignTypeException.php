@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Gamebay\Rksv\ErrorHandlers\Exceptions;
+namespace Gamebay\RKSV\ErrorHandlers\Exceptions;
 
 
 use Illuminate\Http\Response;
@@ -9,7 +9,7 @@ use Throwable;
 
 /**
  * Class InvalidSignTypeException
- * @package Gamebay\Rksv\ErrorHandlers\Exceptions
+ * @package Gamebay\RKSV\ErrorHandlers\Exceptions
  */
 class InvalidSignTypeException extends \Exception implements \Throwable
 {

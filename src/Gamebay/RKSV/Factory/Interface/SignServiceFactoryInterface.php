@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Gamebay\Rksv\Factory;
+namespace Gamebay\RKSV\Factory;
 
 
 use Validators\SignatureType;
 
 /**
  * Interface SignServiceFactoryInterface
- * @package Gamebay\Rksv\Factory
+ * @package Gamebay\RKSV\Factory
  */
 interface SignServiceFactoryInterface
 {

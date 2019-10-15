@@ -3,8 +3,8 @@
 
 namespace Validators;
 
-use Gamebay\Rksv\ErrorHandlers\Exceptions\InvalidSignTypeException;
-use Gamebay\Rksv\Services\ReceiptSigner;
+use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException;
+use Gamebay\RKSV\Services\ReceiptSigner;
 use Illuminate\Http\Response;
 
 /**

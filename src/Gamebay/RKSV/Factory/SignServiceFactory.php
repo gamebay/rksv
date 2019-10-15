@@ -3,8 +3,8 @@
 
 namespace Factory;
 
-use Gamebay\Rksv\ErrorHandlers\Exceptions\InvalidSignTypeException;
-use Gamebay\Rksv\Factory\SignServiceFactoryInterface;
+use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException;
+use Gamebay\RKSV\Factory\SignServiceFactoryInterface;
 use Gamebay\RKSV\Services\SignServices\SingServiceInterface;
 use Validators\SignatureType;
 
