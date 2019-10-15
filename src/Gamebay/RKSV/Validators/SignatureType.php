@@ -1,13 +1,11 @@
 <?php
 
 
-namespace ErrorHandlers;
+namespace Validators;
 
-
-use ErrorHandlers\Exceptions\InvalidSignTypeException;
+use Gamebay\Rksv\ErrorHandlers\Exceptions\InvalidSignTypeException;
+use Gamebay\Rksv\Services\ReceiptSigner;
 use Illuminate\Http\Response;
-use phpDocumentor\Reflection\Types\String_;
-use Services\ReceiptSigner;
 
 /**
  * Class SignatureType
@@ -17,20 +15,17 @@ class SignatureType
 {
 
     /**
-     * @var
+     * @var $instanceOf
      */
     private $instanceOf;
 
-    /**
-     *
-     */
     const SIGN_TYPE = [
         //storno code: U1RP
         ReceiptSigner::CANCEL_SIGN_TYPE => 'Cancel',
         //training code: VFJB
         ReceiptSigner::TRAINING_SIGN_TYPE => 'Training',
         ReceiptSigner::NORMAL_SIGN_TYPE => 'Normal',
-        //null code: cashbox ID
+        //null code: 0
         ReceiptSigner::NULL_SIGN_TYPE => 'Null',
     ];
 
@@ -43,7 +38,7 @@ class SignatureType
     {
 
         if (!array_key_exists($type, self::SIGN_TYPE)) {
-            throw new InvalidSignTypeException('Invalid receipt sign type', Response::HTTP_UNPROCESSABLE_ENTITY);
+            throw new InvalidSignTypeException();
         }
 
         $this->setInstanceOf(self::SIGN_TYPE[$type]);
@@ -62,7 +57,7 @@ class SignatureType
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getInstanceOf(): string
     {
