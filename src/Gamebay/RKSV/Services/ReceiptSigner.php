@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Services;
+namespace Gamebay\RKSV\Services;
 
 use ErrorHandlers\Exceptions\NoReceiptDataException;
 use Models\ReceiptData;
