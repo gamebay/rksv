@@ -5,11 +5,12 @@
     "type": "library",
     "require": {
         "php": ">=7.1.0",
-        "laravel/framework": "5.5.*",
-        "guzzlehttp/guzzle": "6.3.*",
-        "simplesoftwareio/simple-qrcode": "2.0.*"
+        "guzzlehttp/guzzle": "^6.3",
+        "simplesoftwareio/simple-qrcode": "^2.0",
+        "illuminate/support": "^6.3"
     },
     "require-dev": {
+        "laravel/framework": "^5.5"
     },
     "license": "GNU v3.0",
     "authors": [
@@ -24,8 +25,15 @@
     ],
     "autoload": {
         "psr-4": {
-            "Gamebay\\Rksv\\": "src/"
+            "Gamebay\\Rksv\\": "src/Gamebay/RKSV/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel":{
+            "providers": [
+                "Gamebay\\RKSV\\ServiceProvider"
+            ]
+        }
+    }
 }
