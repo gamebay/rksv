@@ -6,7 +6,7 @@ use Gamebay\RKSV\Services\ReceiptSigner;
 
 class ReceiptSignerTest extends TestCase
 {
-    public function testTestt()
+    public function testGenerateQRCodeString()
     {
         $receiptSigner = new ReceiptSigner();
 
