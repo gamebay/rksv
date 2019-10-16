@@ -15,6 +15,9 @@ class ReceiptData
     /** @var string $cashboxId */
     private $cashboxId;
 
+    /** @var string $salesCounter */
+    private $salesCounter;
+
     /** @var string $receiptId */
     private $receiptId;
 
@@ -40,6 +43,7 @@ class ReceiptData
      *
      * @param string $cashboxId
      * @param string $receiptId
+     * @param string $salesCounter
      * @param \DateTime $receiptTimestamp
      * @param array $items
      * @param string $previousReceiptCompactSignature
@@ -48,19 +52,21 @@ class ReceiptData
      * @throws InvalidItemException
      *
      */
-    public function withData(
+    public static function withData(
         string $cashboxId,
+        string $salesCounter,
         string $receiptId,
         \DateTime $receiptTimestamp,
         array $items,
         string $previousReceiptCompactSignature
     ) {
-        $receiptData = new $this;
+        $receiptData = new self();
 
         $receiptData->cashboxId = $cashboxId;
+        $receiptData->salesCounter = $salesCounter;
         $receiptData->receiptId = $receiptId;
         $receiptData->receiptTimestamp = $receiptTimestamp;
-        if ($this->validateItemsArray($items)) {
+        if (self::validateItemsArray($items)) {
             $receiptData->items = $items;
         } else {
             throw new InvalidItemException();
@@ -75,7 +81,7 @@ class ReceiptData
      * @param array $item
      * @return bool
      */
-    public function isValidItem(array $item)
+    public static function isValidItem(array $item)
     {
         return isset($item['net']) && is_numeric($item['net'])
             && isset($item['tax']) && is_numeric($item['tax'])
@@ -87,10 +93,10 @@ class ReceiptData
      * @param array $items
      * @return bool
      */
-    public function isValidItemsArray(array $items)
+    public static function isValidItemsArray(array $items)
     {
         foreach ($items as $item) {
-            if (!$this->isValidItem($item)) {
+            if (!self::isValidItem($item)) {
                 return false;
             }
         }
@@ -111,6 +117,22 @@ class ReceiptData
     public function getCashboxId()
     {
         return $this->cashboxId;
+    }
+
+    /**
+     * @param string $salesCounter
+     */
+    public function setSalesCounter(string $salesCounter)
+    {
+        $this->salesCounter = $salesCounter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalesCounter()
+    {
+        return $this->salesCounter;
     }
 
     /**
@@ -152,7 +174,7 @@ class ReceiptData
      */
     public function setItems(array $items)
     {
-        if ($this->isValidItemsArray($items)) {
+        if (self::isValidItemsArray($items)) {
             $this->items = $items;
         } else {
             throw new InvalidItemException();
@@ -181,7 +203,7 @@ class ReceiptData
             'net' => $net,
             'tax' => $tax
         ];
-        if ($this->isValidItem($item)) {
+        if (self::isValidItem($item)) {
             $this->items[] = $item;
         } else {
             throw new InvalidItemException();
