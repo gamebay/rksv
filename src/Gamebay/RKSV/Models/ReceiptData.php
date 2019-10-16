@@ -83,8 +83,8 @@ class ReceiptData
      */
     public static function isValidItem(array $item)
     {
-        return isset($item['net']) && is_numeric($item['net'])
-            && isset($item['tax']) && is_numeric($item['tax'])
+        return isset($item['brutto']) && is_numeric($item['brutto'])
+            && isset($item['tax']) && is_int($item['tax'])
             && $item['tax'] >= 0 && $item['tax'] <= 100;
     }
 
@@ -197,10 +197,10 @@ class ReceiptData
      *
      * @throws InvalidItemException
      */
-    public function addItem(float $net, float $tax)
+    public function addItem(float $brutto, int $tax)
     {
         $item = [
-            'net' => $net,
+            'brutto' => $brutto,
             'tax' => $tax
         ];
         if (self::isValidItem($item)) {
@@ -215,11 +215,11 @@ class ReceiptData
      * @param $net
      * @param $tax
      */
-    public function removeItem($net, $tax)
+    public function removeItem(float $brutto, int $tax)
     {
         $foundKey = -1;
         foreach ($this->items as $key => $item) {
-            if ($item['net'] == $net && $item['tax'] == $tax) {
+            if ($item['brutto'] == $brutto && $item['tax'] == $tax) {
                 $foundKey = $key;
                 break;
             }
