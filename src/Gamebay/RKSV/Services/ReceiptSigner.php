@@ -3,11 +3,11 @@
 
 namespace Gamebay\RKSV\Services;
 
+use chillerlan\QRCode\QRCode;
 use Gamebay\RKSV\Factory\SignServiceFactory;
 use Gamebay\RKSV\ErrorHandlers\Exceptions\NoReceiptDataException;
 use Illuminate\Http\Response;
 use Gamebay\RKSV\Models\ReceiptData;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /**
  * Class ReceiptSigner
@@ -18,7 +18,6 @@ class ReceiptSigner
     private $receiptData;
     private $signature;
     private $qr;
-    private $tmpQRimage = '/tmp/tmp-qr.png';
 
     const NORMAL_SIGN_TYPE = 'normal';
     const CANCEL_SIGN_TYPE = 'storno';
@@ -87,9 +86,7 @@ class ReceiptSigner
      */
     public function generateQRCodeString(string $string)
     {
-        QrCode::format('png')->generate($string, $this->tmpQRimage);
-        $data = file_get_contents($this->tmpQRimage);
-        return 'data:image/png;base64,' . base64_encode($data);
+        return (new QRCode())->render($string);
     }
 
     /**

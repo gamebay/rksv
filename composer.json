@@ -6,12 +6,11 @@
     "require": {
         "php": ">=7.1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "simplesoftwareio/simple-qrcode": "^2.0",
-        "illuminate/support": "^6.3"
+        "illuminate/support": "^6.3",
+        "chillerlan/php-qrcode": "^3.1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7",
-        "laravel/framework": "^5.5"
+        "phpunit/phpunit": "^7"
     },
     "license": "GNU v3.0",
     "authors": [
@@ -26,7 +25,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Gamebay\\Rksv\\": "src/Gamebay/RKSV/"
+            "Gamebay\\RKSV\\": "src/Gamebay/RKSV/"
         }
     },
     "minimum-stability": "dev",
