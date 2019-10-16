@@ -2,7 +2,7 @@
 
 
 use PHPUnit\Framework\TestCase;
-use \Gamebay\RKSV\Models\ReceiptData;
+use Gamebay\RKSV\Models\ReceiptData;
 
 class ReceiptDataTest extends TestCase
 {

@@ -3,10 +3,10 @@
 
 namespace Gamebay\RKSV\Services;
 
-use Factory\SignServiceFactory;
+use Gamebay\RKSV\Factory\SignServiceFactory;
 use Gamebay\RKSV\ErrorHandlers\Exceptions\NoReceiptDataException;
 use Illuminate\Http\Response;
-use Models\ReceiptData;
+use Gamebay\RKSV\Models\ReceiptData;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /**
