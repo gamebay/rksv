@@ -80,7 +80,7 @@ class ReceiptData
      */
     public function isValidItemsArray(array $items)
     {
-        foreach ($this->items as $item) {
+        foreach ($items as $item) {
             if (!$this->isValidItem($item)) {
                 return false;
             }
