@@ -6,7 +6,7 @@ namespace Gamebay\RKSV\Factory;
 use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException;
 use Gamebay\RKSV\Factory\SignServiceFactoryInterface;
 use Gamebay\Rksv\Providers\PrimeSignProvider;
-use Gamebay\RKSV\Services\SignServices\SingServiceInterface;
+use Gamebay\RKSV\Services\SignServices\SignServiceInterface;
 use Validators\SignatureType;
 
 /**
@@ -29,10 +29,10 @@ class SignServiceFactory implements SignServiceFactoryInterface
 
     /**
      * @param SignatureType $signatureType
-     * @return SingServiceInterface
+     * @return SignServiceInterface
      * @throws InvalidSignTypeException
      */
-    public function create(SignatureType $signatureType): SingServiceInterface
+    public function create(SignatureType $signatureType): SignServiceInterface
     {
         $classTarget = $signatureType->getInstanceOf() . 'SignService';
 
@@ -40,7 +40,7 @@ class SignServiceFactory implements SignServiceFactoryInterface
             throw new InvalidSignTypeException();
         }
 
-        /** @var SingServiceInterface $signService */
+        /** @var SignServiceInterface $signService */
         $signService = new $classTarget($this->provider);
 
         return $signService;

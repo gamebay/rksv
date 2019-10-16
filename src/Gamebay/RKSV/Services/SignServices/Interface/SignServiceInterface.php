@@ -7,10 +7,10 @@ namespace Gamebay\RKSV\Services\SignServices;
 use GuzzleHttp\Psr7\Request;
 
 /**
- * Interface SingServiceInterface
+ * Interface SignServiceInterface
  * @package Gamebay\RKSV\Services\SignServices
  */
-interface SingServiceInterface
+interface SignServiceInterface
 {
 
     /**

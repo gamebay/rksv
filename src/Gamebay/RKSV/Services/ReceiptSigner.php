@@ -70,7 +70,7 @@ class ReceiptSigner
     /**
      * Get appropriate Sign Service
      * @param string $sign_type
-     * @return SignServices\SingServiceInterface
+     * @return SignServices\SignServiceInterface
      * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
      */
     public function getSignService(string $sign_type)

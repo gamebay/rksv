@@ -8,7 +8,7 @@ namespace Gamebay\RKSV\Services\SignServices;
  * Class TrainingSignService
  * @package Gamebay\RKSV\Services\SignServices
  */
-class TrainingSignService implements SingServiceInterface
+class TrainingSignService implements SignServiceInterface
 {
 
     /**

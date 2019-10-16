@@ -12,7 +12,7 @@ use GuzzleHttp\Psr7\Request;
  * Class CancelSignService
  * @package Gamebay\RKSV\Services\SignServices
  */
-class CancelSignService implements SingServiceInterface
+class CancelSignService implements SignServiceInterface
 {
 
     /**
