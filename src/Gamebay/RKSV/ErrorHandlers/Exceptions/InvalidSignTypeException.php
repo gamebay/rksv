@@ -11,7 +11,7 @@ use Throwable;
  * Class InvalidSignTypeException
  * @package Gamebay\RKSV\ErrorHandlers\Exceptions
  */
-class InvalidSignTypeException extends RksvException implements \Throwable
+class InvalidSignTypeException extends RksvException
 {
 
     /**

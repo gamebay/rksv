@@ -11,7 +11,7 @@ use Throwable;
  * Class InvalidSignServiceException
  * @package Gamebay\RKSV\ErrorHandlers\Exceptions
  */
-class InvalidSignServiceException extends RksvException implements \Throwable
+class InvalidSignServiceException extends RksvException
 {
 
     /**

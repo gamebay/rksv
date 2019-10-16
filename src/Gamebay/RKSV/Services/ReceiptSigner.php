@@ -5,7 +5,8 @@ namespace Gamebay\RKSV\Services;
 
 use Factory\SignServiceFactory;
 use Gamebay\RKSV\ErrorHandlers\Exceptions\NoReceiptDataException;
-use Gamebay\RKSV\Models\ReceiptData;
+use Illuminate\Http\Response;
+use Models\ReceiptData;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /**
@@ -33,6 +34,38 @@ class ReceiptSigner
         if ($receiptData != null) {
             $this->receiptData = $receiptData;
         }
+    }
+
+    /**
+     * @param ReceiptData $receiptData
+     */
+    public function setReceiptData(ReceiptData $receiptData)
+    {
+        $this->receiptData = $receiptData;
+    }
+
+    /**
+     * @return ReceiptData
+     */
+    public function getReceiptData()
+    {
+        return $this->receiptData;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getQR()
+    {
+        return $this->qr;
     }
 
     /**
@@ -67,13 +100,13 @@ class ReceiptSigner
      */
     private function sign(ReceiptData $receiptData, string $signType)
     {
-        if ($receiptData == null && $this->receiptData == null) {
-            throw new NoReceiptDataException();
-        }
+        $signatureType = self::NORMAL_SIGN_TYPE;
 
-        $signInterface = $this->getSignService($signType);
+        $receiptData = $this->isReceiptDataSet($receiptData);
 
-        $this->signature = $signInterface->sign($receiptData ?? $this->receiptData);
+        $signInterface = $this->getSignService($signatureType);
+
+        $this->signature = $signInterface->sign($receiptData);
         $this->qr = $this->generateQRCode($this->signature);
     }
 
@@ -119,33 +152,17 @@ class ReceiptSigner
 
     /**
      * @param ReceiptData $receiptData
-     */
-    public function setReceiptData(ReceiptData $receiptData)
-    {
-        $this->receiptData = $receiptData;
-    }
-
-    /**
      * @return ReceiptData
+     * @throws NoReceiptDataException
      */
-    public function getReceiptData()
+    private function isReceiptDataSet(ReceiptData $receiptData): ReceiptData
     {
-        return $this->receiptData;
-    }
+        $receiptData ?: $receiptData = $this->receiptData;
 
-    /**
-     * @return null|string
-     */
-    public function getSignature()
-    {
-        return $this->signature;
-    }
+        if (null === $receiptData) {
+            throw new NoReceiptDataException();
+        }
 
-    /**
-     * @return null|string
-     */
-    public function getQR()
-    {
-        return $this->qr;
+        return $receiptData;
     }
 }
