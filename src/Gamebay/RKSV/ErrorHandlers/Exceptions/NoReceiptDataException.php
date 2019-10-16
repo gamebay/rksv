@@ -18,7 +18,7 @@ class NoReceiptDataException extends RksvException
      * @param int $code
      * @param null $previous
      */
-    public function __construct($message = "Tried to instantiate DataReceipt without valid data", $code = Response::HTTP_UNPROCESSABLE_ENTITY, $previous = null)
+    public function __construct($message = "Tried to instantiate DataReceipt without valid dataset", $code = Response::HTTP_UNPROCESSABLE_ENTITY, $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

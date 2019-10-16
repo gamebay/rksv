@@ -8,7 +8,7 @@ namespace Gamebay\RKSV\ErrorHandlers\Exceptions;
  * Class RksvException
  * @package Gamebay\RKSV\ErrorHandlers\Exceptions
  */
-class RksvException extends \Exception
+class RksvException extends \Exception implements \Throwable
 {
     /**
      * RksvException constructor.
