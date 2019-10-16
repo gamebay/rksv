@@ -3,10 +3,10 @@
 
 namespace Gamebay\RKSV\Services;
 
+use Factory\SignServiceFactory;
 use Gamebay\RKSV\ErrorHandlers\Exceptions\NoReceiptDataException;
 use Gamebay\RKSV\Models\ReceiptData;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
 
 /**
  * Class ReceiptSigner
@@ -17,6 +17,7 @@ class ReceiptSigner
     private $receiptData;
     private $signature;
     private $qr;
+    private $tmpQRimage = '/tmp/tmp-qr.png';
 
     const NORMAL_SIGN_TYPE = 'normal';
     const CANCEL_SIGN_TYPE = 'storno';
@@ -37,7 +38,8 @@ class ReceiptSigner
     /**
      * Get appropriate Sign Service
      * @param string $sign_type
-     * @return mixed
+     * @return SignServices\SingServiceInterface
+     * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
      */
     public function getSignService(string $sign_type)
     {
@@ -45,13 +47,16 @@ class ReceiptSigner
     }
 
     /**
-     * Generate QR code from signature, using simple-qrcode package
+     * Generate QR code png image from string, using simple-qrcode package
+     * Convert this image to base64 string representation ready to be used as src of an img tag
      * @param string $signature
      * @return string
      */
-    public function generateQRCode(string $signature)
+    public function generateQRCodeString(string $string)
     {
-        return QrCode::generate($signature);
+        QrCode::format('png')->generate($string, $this->tmpQRimage);
+        $data = file_get_contents($this->tmpQRimage);
+        return 'data:image/png;base64,' . base64_encode($data);
     }
 
     /**
