@@ -152,7 +152,7 @@ class ReceiptSigner
      * @return ReceiptData
      * @throws NoReceiptDataException
      */
-    private function isReceiptDataSet(ReceiptData $receiptData): ReceiptData
+    private function isReceiptDataSet(ReceiptData $receiptData = null): ReceiptData
     {
         $receiptData ?: $receiptData = $this->receiptData;
 
