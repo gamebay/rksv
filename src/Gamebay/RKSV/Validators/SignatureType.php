@@ -19,14 +19,22 @@ class SignatureType
      */
     private $instanceOf;
 
+    /** @var array containing key values for constructing valid classes */
     const SIGN_TYPE = [
-        //storno code: U1RP
         ReceiptSigner::CANCEL_SIGN_TYPE => 'Cancel',
-        //training code: VFJB
         ReceiptSigner::TRAINING_SIGN_TYPE => 'Training',
         ReceiptSigner::NORMAL_SIGN_TYPE => 'Normal',
-        //null code: 0
         ReceiptSigner::NULL_SIGN_TYPE => 'Null',
+    ];
+
+    /** @var array containing values for generating receipts which aren't normally chained */
+    const SIGN_CODE = [
+        //storno
+        ReceiptSigner::CANCEL_SIGN_TYPE => 'U1RP',
+        //training
+        ReceiptSigner::TRAINING_SIGN_TYPE => 'VFJB',
+        //first receipt
+        ReceiptSigner::NULL_SIGN_TYPE => '0',
     ];
 
     /**
