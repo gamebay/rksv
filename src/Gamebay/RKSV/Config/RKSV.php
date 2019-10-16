@@ -26,4 +26,9 @@ return [
      */
     'rksv_primesign_location_id' => env('RKSV_PRIMESIGN_LOCATION_ID', 'AT3'),
 
+    /**
+     * Possible taxes
+     */
+    'taxes' => ['20','10','13','0','special']
+
 ];

@@ -230,6 +230,23 @@ class ReceiptData
     }
 
     /**
+     * Sums the items' brutto values into tax groups given
+     * @param array $taxes
+     * @return array
+     */
+    public function sumItemsByTaxes(array $taxes)
+    {
+        $zeros = array_fill(0, count($taxes), 0);
+        $taxValues = array_combine($taxes, $zeros);
+
+        foreach ($this->items as $item) {
+            $taxValues[strval($item['tax'])] += $item['brutto'];
+        }
+
+        return $taxValues;
+    }
+
+    /**
      * @param string $signature
      */
     public function setPreviousReceiptCompactSignature(string $signature)

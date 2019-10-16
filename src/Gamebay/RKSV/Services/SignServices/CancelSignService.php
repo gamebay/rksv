@@ -48,34 +48,12 @@ class CancelSignService implements SignServiceInterface
 
         $locationId = config('rksv_primesign_location_id');
 
-        $taxes = $this->getTaxValuesFromItems($this->receiptData->getItems());
+        $taxValues = implode('_', $this->receiptData->sumItemsByTaxes(config('taxes')));
 
-        $body = '_R1-' . $locationId . '_' . $this->receiptData->getCashboxId() . '_' . $this->receiptData->getReceiptId() . '_' . $this->receiptData->getReceiptTimestamp() . '_' . $taxes . '_' . $this->receiptData->getTurnoverCounter . '_' . config('rksv_primesign_certificate_number') . '_' . $this->receiptData->getPreviousReceiptCompactSignature();
+        $body = '_R1-' . $locationId . '_' . $this->receiptData->getCashboxId() . '_' . $this->receiptData->getReceiptId() . '_' . $this->receiptData->getReceiptTimestamp() . '_' . $taxValues . '_' . $this->receiptData->getTurnoverCounter . '_' . config('rksv_primesign_certificate_number') . '_' . $this->receiptData->getPreviousReceiptCompactSignature();
 
         $httpClientRequest = new Request('POST', $this->provider->fullSignerUrl, $headers, $body);
 
         return $httpClientRequest;
-    }
-
-    /**
-     * @param array $items
-     * @return array
-     */
-    private function getTaxValuesFromItems(array $items)
-    {
-
-        $taxValues = [
-            '20' => 0,
-            '10' => 0,
-            '13' => 0,
-            '0' => 0,
-            'special' => 0
-        ];
-
-        foreach ($items as $item) {
-            $taxValues[$item['tax']] += $item['brutto'];
-        }
-
-        return implode('_', $taxValues);
     }
 }
