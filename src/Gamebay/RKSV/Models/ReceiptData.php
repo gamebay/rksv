@@ -239,6 +239,7 @@ class ReceiptData
         $zeros = array_fill(0, count($taxes), 0);
         $taxValues = array_combine($taxes, $zeros);
 
+        // TODO handle 'special' without referencing 'special'
         foreach ($this->items as $item) {
             $taxValues[strval($item['tax'])] += $item['brutto'];
         }
