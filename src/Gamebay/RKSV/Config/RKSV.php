@@ -29,6 +29,12 @@ return [
     /**
      * Possible taxes
      */
-    'taxes' => ['20','10','13','0','special']
+    'taxes' => ['20','10','13','0','special'],
+
+    /**
+     * AES key for the encryption of sales counter
+     * FinanzOnline should be notified of this key
+     */
+    'AES-key' => '123456789'
 
 ];
