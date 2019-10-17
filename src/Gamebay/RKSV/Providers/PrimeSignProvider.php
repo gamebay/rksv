@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Gamebay\Rksv\Providers;
+namespace Gamebay\RKSV\Providers;
 
 
 use GuzzleHttp\Client;

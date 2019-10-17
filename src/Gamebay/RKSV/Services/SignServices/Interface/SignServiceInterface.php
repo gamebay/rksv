@@ -14,7 +14,13 @@ interface SignServiceInterface
 {
 
     /**
+     * @param string $compactReceiptData
      * @return Request
      */
-    public function sign(): Request;
+    public function sign(string $compactReceiptData): Request;
+    
+    /**
+     * @return string
+     */
+    public function generateCompactReceiptData(): string;
 }

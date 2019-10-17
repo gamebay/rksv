@@ -8,6 +8,7 @@ use Gamebay\RKSV\Factory\SignServiceFactory;
 use Gamebay\RKSV\ErrorHandlers\Exceptions\NoReceiptDataException;
 use Illuminate\Http\Response;
 use Gamebay\RKSV\Models\ReceiptData;
+use Gamebay\RKSV\Validators\SignatureType;
 
 /**
  * Class ReceiptSigner
@@ -72,79 +73,90 @@ class ReceiptSigner
      * @param string $sign_type
      * @return SignServices\SignServiceInterface
      * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
+     * @throws NoReceiptDataException
      */
     public function getSignService(string $sign_type)
     {
-        return SignServiceFactory::create($sign_type);
+        $this->isReceiptDataSet($this->receiptData);
+
+        $signatureType = new SignatureType($sign_type);
+        $signServiceFactory = new SignServiceFactory($this->receiptData);
+
+        return $signServiceFactory->create($signatureType);
     }
 
     /**
      * Generate QR code png image from string, using simple-qrcode package
      * Convert this image to base64 string representation ready to be used as src of an img tag
+     * @param string $compactReceiptData
      * @param string $signature
      * @return string
      */
-    public function generateQRCodeString(string $string)
+    public function generateQRCodeString(string $compactReceiptData, string $signature)
     {
-        return (new QRCode())->render($string);
+        $encrypter = new Encrypter('AES-key-123');
+
+        $compactSignature = $encrypter->getCompactSignature($signature);
+        $compactSignature = $encrypter->base64url_decode($compactSignature);
+        $compactSignature = base64_encode($compactSignature);
+
+        return (new QRCode())->render($compactReceiptData . '_' . $compactSignature);
     }
 
     /**
      * Signs the receiptData with appropriate signer, generates signature and QR code.
-     * @param ReceiptData $receiptData
      * @param string $signType
      * @throws NoReceiptDataException
+     * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
      */
-    private function sign(ReceiptData $receiptData, string $signType)
+    private function sign(string $signType)
     {
-        $signatureType = self::NORMAL_SIGN_TYPE;
+        $signInterface = $this->getSignService($signType);
 
-        $receiptData = $this->isReceiptDataSet($receiptData);
+        $compactReceiptData = $signInterface->generateCompactReceiptData();
 
-        $signInterface = $this->getSignService($signatureType);
-
-        $this->signature = $signInterface->sign($receiptData);
-        $this->qr = $this->generateQRCode($this->signature);
+        $this->signature = $signInterface->sign($compactReceiptData);
+        $this->qr = $this->generateQRCode($compactReceiptData, $this->signature);
     }
 
     /**
      * Helper for normal sign.
-     * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
+     * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
      */
-    public function normalSign(ReceiptData $receiptData = null)
+    public function normalSign()
     {
-        $this->sign($receiptData, self::NORMAL_SIGN_TYPE);
+        $this->sign(self::NORMAL_SIGN_TYPE);
     }
 
     /**
      * Helper for cancel/storno sign.
-     * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
+     * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
      */
-    public function cancelSign(ReceiptData $receiptData = null)
+    public function cancelSign()
     {
-        $this->sign($receiptData, self::CANCEL_SIGN_TYPE);
+        $this->sign(self::CANCEL_SIGN_TYPE);
     }
 
     /**
      * Helper for training sign.
-     * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
+     * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
      */
-    public function trainingSign(ReceiptData $receiptData = null)
+    public function trainingSign()
     {
-        $this->sign($receiptData, self::TRAINING_SIGN_TYPE);
+        $this->sign(self::TRAINING_SIGN_TYPE);
     }
 
     /**
      * Helper for null/first sign.
-     * @param ReceiptData|null $receiptData
      * @throws NoReceiptDataException
+     * @throws \Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException
      */
-    public function nullSign(ReceiptData $receiptData = null)
+    public function nullSign()
     {
-        $this->sign($receiptData, self::NULL_SIGN_TYPE);
+        $this->sign(self::NULL_SIGN_TYPE);
     }
 
     /**

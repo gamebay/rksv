@@ -4,10 +4,10 @@
 namespace Gamebay\RKSV\Factory;
 
 use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException;
-use Gamebay\RKSV\Factory\SignServiceFactoryInterface;
-use Gamebay\Rksv\Providers\PrimeSignProvider;
+use Gamebay\RKSV\Models\ReceiptData;
+use Gamebay\RKSV\Providers\PrimeSignProvider;
 use Gamebay\RKSV\Services\SignServices\SignServiceInterface;
-use Validators\SignatureType;
+use Gamebay\RKSV\Validators\SignatureType;
 
 /**
  * Class SignServiceFactory
@@ -19,12 +19,17 @@ class SignServiceFactory implements SignServiceFactoryInterface
     /** @var PrimeSignProvider $provider */
     private $provider;
 
+    /** @var ReceiptData */
+    private $receiptData;
+
     /**
      * SignServiceFactory constructor.
+     * @param ReceiptData $receiptData
      */
-    public function __construct()
+    public function __construct(ReceiptData $receiptData)
     {
         $this->provider = new PrimeSignProvider();
+        $this->receiptData = $receiptData;
     }
 
     /**
@@ -41,7 +46,7 @@ class SignServiceFactory implements SignServiceFactoryInterface
         }
 
         /** @var SignServiceInterface $signService */
-        $signService = new $classTarget($this->provider);
+        $signService = new $classTarget($this->provider, $this->receiptData);
 
         return $signService;
 

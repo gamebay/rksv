@@ -7,7 +7,8 @@
         "php": ">=7.2.0",
         "guzzlehttp/guzzle": "^6.3",
         "illuminate/support": "5.5.*",
-        "chillerlan/php-qrcode": "^3.1.1"
+        "chillerlan/php-qrcode": "^3.1.1",
+        "ext-openssl": "*"
     },
     "require-dev": {
         "laravel/framework": "5.5.*",

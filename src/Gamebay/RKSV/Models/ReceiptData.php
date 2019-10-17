@@ -27,8 +27,8 @@ class ReceiptData
     /** @var array $items */
     private $items;
 
-    /** @var string $previousReceiptCompactSignature */
-    private $previousReceiptCompactSignature;
+    /** @var string $previousReceiptSignature */
+    private $previousReceiptSignature;
 
     /**
      * ReceiptData constructor.
@@ -42,15 +42,13 @@ class ReceiptData
      * Construct ReceiptData with provided data
      *
      * @param string $cashboxId
-     * @param string $receiptId
      * @param string $salesCounter
+     * @param string $receiptId
      * @param \DateTime $receiptTimestamp
      * @param array $items
-     * @param string $previousReceiptCompactSignature
-     *
+     * @param string $previousReceiptSignature
      * @return ReceiptData
      * @throws InvalidItemException
-     *
      */
     public static function withData(
         string $cashboxId,
@@ -58,7 +56,7 @@ class ReceiptData
         string $receiptId,
         \DateTime $receiptTimestamp,
         array $items,
-        string $previousReceiptCompactSignature
+        string $previousReceiptSignature
     ) {
         $receiptData = new self();
 
@@ -66,12 +64,12 @@ class ReceiptData
         $receiptData->salesCounter = $salesCounter;
         $receiptData->receiptId = $receiptId;
         $receiptData->receiptTimestamp = $receiptTimestamp;
-        if (self::validateItemsArray($items)) {
+        if (self::isValidItemsArray($items)) {
             $receiptData->items = $items;
         } else {
             throw new InvalidItemException();
         }
-        $receiptData->previousReceiptCompactSignature = $previousReceiptCompactSignature;
+        $receiptData->previousReceiptSignature = $previousReceiptSignature;
 
         return $receiptData;
     }
@@ -156,7 +154,7 @@ class ReceiptData
      */
     public function setReceiptTimestamp(\DateTime $timestamp)
     {
-        $this->receiptTimestamp = $timestamp->format('Y-m-d H:i:s');
+        $this->receiptTimestamp = $timestamp->format('Y-m-d\TH:i:s');
     }
 
     /**
@@ -164,7 +162,7 @@ class ReceiptData
      */
     public function getReceiptTimestamp()
     {
-        return $this->receiptTimestamp;
+        return $this->receiptTimestamp->format('Y-m-d\TH:i:s');
     }
 
     /**
@@ -250,16 +248,16 @@ class ReceiptData
     /**
      * @param string $signature
      */
-    public function setPreviousReceiptCompactSignature(string $signature)
+    public function setPreviousReceiptSignature(string $signature)
     {
-        $this->previousReceiptCompactSignature = $signature;
+        $this->previousReceiptSignature = $signature;
     }
 
     /**
      * @return string
      */
-    public function getPreviousReceiptCompactSignature()
+    public function getPreviousReceiptSignature()
     {
-        return $this->previousReceiptCompactSignature;
+        return $this->previousReceiptSignature;
     }
 }

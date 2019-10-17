@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Validators;
+namespace Gamebay\RKSV\Validators;
 
 use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException;
 use Gamebay\RKSV\Services\ReceiptSigner;

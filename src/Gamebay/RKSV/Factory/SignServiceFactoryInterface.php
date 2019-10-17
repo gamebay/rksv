@@ -4,7 +4,7 @@
 namespace Gamebay\RKSV\Factory;
 
 
-use Validators\SignatureType;
+use Gamebay\RKSV\Validators\SignatureType;
 
 /**
  * Interface SignServiceFactoryInterface
