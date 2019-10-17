@@ -11,13 +11,13 @@ class ReceiptDataTest extends TestCase
         $receiptData = new ReceiptData();
 
         $item =  [
-            'net' => 100,
+            'brutto' => 100,
             'tax' => 20
         ];
         $this->assertTrue($receiptData->isValidItem($item));
 
         $items = [
-            'net' => 100,
+            'brutto' => 100,
             'tax' => 101
         ];
         $this->assertFalse($receiptData->isValidItem($items));

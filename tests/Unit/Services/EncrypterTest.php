@@ -1,12 +1,14 @@
 <?php
 
 
-use PHPUnit\Framework\TestCase;
 use Gamebay\RKSV\Services\Encrypter;
 use Gamebay\RKSV\Models\ReceiptData;
+use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-class EncrypterTest extends TestCase
+abstract class EncrypterTest extends TestCase
 {
+
     public function testEncryptSalesCounter()
     {
         $salesCounter = '12345';
@@ -15,7 +17,7 @@ class EncrypterTest extends TestCase
         $receiptData->setSalesCounter('100');
         $receiptData->setCashboxId('1');
         $receiptData->setReceiptId('123');
-
-        echo "\n" . Encrypter::encryptSalesCounter($receiptData);
+        
+        echo "\n\n" . Encrypter::encryptSalesCounter($receiptData);
     }
 }
