@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Gamebay\Rksv\ServiceProvider;
+namespace Gamebay\RKSV;
 
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class RKSVServiceProvider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     public function boot()
     {
@@ -14,7 +14,7 @@ class RKSVServiceProvider extends ServiceProvider
         // Allow your user to publish the config
         $this->publishes([
             __DIR__ . '/Config/RKSV.php' => config_path('RKSV.php'),
-        ], 'config');
+        ]);
 
     }
 

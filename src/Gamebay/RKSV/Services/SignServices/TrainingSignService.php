@@ -29,6 +29,7 @@ class TrainingSignService extends BaseSignService implements SignServiceInterfac
     {
         $salesCounterCode = SignatureType::SIGN_CODE[ReceiptSigner::TRAINING_SIGN_TYPE];
 
+        $this->receiptData = $receiptData;
         $this->receiptData->setSalesCounter($salesCounterCode);
 
         parent::__construct($provider, $receiptData, $tokenKey, $taxRates, $locationId);

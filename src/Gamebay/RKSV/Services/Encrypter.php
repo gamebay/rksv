@@ -25,7 +25,7 @@ class Encrypter
      */
     public function __construct(string $encryptionKey = null)
     {
-        isset($encryptionKey) ? $this->encryptionKey = $encryptionKey : $this->encryptionKey = config('AES-key');
+        isset($encryptionKey) ? $this->encryptionKey = $encryptionKey : $this->encryptionKey = config('RKSV.AES-key');
     }
 
     /**
@@ -113,6 +113,6 @@ class Encrypter
      */
     public function base64url_decode(string $data)
     {
-        return base64_decode(strtr($data, '-_', '+/'), true);
+        return base64_decode(strtr($data, '-_', '+/'), false);
     }
 }

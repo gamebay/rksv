@@ -8,6 +8,8 @@ use Gamebay\RKSV\Models\ReceiptData;
 use Gamebay\RKSV\Providers\PrimeSignProvider;
 use Gamebay\RKSV\Services\Encrypter;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use Http\Adapter\Guzzle6\Client;
 
 /**
  * Class BaseSignService
@@ -49,17 +51,18 @@ class BaseSignService
         $this->receiptData = $receiptData;
         $this->encrypter = new Encrypter();
 
-        isset($tokenKey) ? $this->tokenKey = $tokenKey : $this->tokenKey = config('rksv_primesign_token_key');
-        isset($taxRates) ? $this->taxRates = $taxRates : $this->taxRates = config('taxes');
-        isset($locationId) ? $this->locationId = $locationId : $this->locationId = config('rksv_primesign_location_id');
+
+        isset($tokenKey) ? $this->tokenKey = $tokenKey : $this->tokenKey = config('RKSV.rksv_primesign_token_key');
+        isset($taxRates) ? $this->taxRates = $taxRates : $this->taxRates = config('RKSV.taxes');
+        isset($locationId) ? $this->locationId = $locationId : $this->locationId = config('RKSV.rksv_primesign_location_id');
 
     }
 
     /**
      * @param string $compactReceiptData
-     * @return Request
+     * @return Response
      */
-    public function sign(string $compactReceiptData): Request
+    public function sign(string $compactReceiptData): Response
     {
 
         $headers = [
@@ -69,8 +72,10 @@ class BaseSignService
 
 
         $httpClientRequest = new Request('POST', $this->provider->fullSignerUrl, $headers, $compactReceiptData);
+        $client = new \GuzzleHttp\Client();
+        $response = $client->send($httpClientRequest);
 
-        return $httpClientRequest;
+        return $response;
     }
 
     /**
@@ -90,7 +95,7 @@ class BaseSignService
             '_' . $this->receiptData->getReceiptTimestamp() .
             '_' . $taxValues .
             '_' . $encryptedSalesCounter .
-            '_' . config('rksv_primesign_certificate_number') .
+            '_' . config('RKSV.rksv_primesign_certificate_number') .
             '_' . $previousCompactSignature;
 
         return $compactSignature;

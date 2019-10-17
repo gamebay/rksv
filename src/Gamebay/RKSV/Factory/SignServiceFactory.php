@@ -39,9 +39,10 @@ class SignServiceFactory implements SignServiceFactoryInterface
      */
     public function create(SignatureType $signatureType): SignServiceInterface
     {
-        $classTarget = $signatureType->getInstanceOf() . 'SignService';
+        $classTarget = 'Gamebay\RKSV\Services\SignServices\\' . $signatureType->getInstanceOf() . 'SignService';
 
-        if (!class_exists($classTarget)) {
+        if (!\class_exists($classTarget)) {
+
             throw new InvalidSignTypeException();
         }
 

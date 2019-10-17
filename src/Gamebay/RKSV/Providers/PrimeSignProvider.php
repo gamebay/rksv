@@ -26,11 +26,11 @@ class PrimeSignProvider
 
     public function __construct()
     {
-        $this->baseUrl = config('RKSV_primesign_base_certificate_url');
-        $this->signUrl = config('rksv_primesign_receipt_sign_url');
+        $this->baseUrl = config('RKSV.rksv_primesign_base_certificate_url');
+        $this->signUrl = config('RKSV.rksv_primesign_receipt_sign_url');
         $this->fullSignerUrl = $this->baseUrl . $this->signUrl;
 
-        $this->apiTokenKey = config('rksv_primesign_token_key');
+        $this->apiTokenKey = config('RKSV.rksv_primesign_token_key');
 
     }
 

@@ -4,7 +4,7 @@
 namespace Gamebay\RKSV\Services\SignServices;
 
 
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Interface SignServiceInterface
@@ -15,9 +15,9 @@ interface SignServiceInterface
 
     /**
      * @param string $compactReceiptData
-     * @return Request
+     * @return Response
      */
-    public function sign(string $compactReceiptData): Request;
+    public function sign(string $compactReceiptData): Response;
     
     /**
      * @return string

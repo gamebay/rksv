@@ -96,11 +96,10 @@ class ReceiptSigner
     {
         $encrypter = new Encrypter('AES-key-123');
 
-        $compactSignature = $encrypter->getCompactSignature($signature);
-        $compactSignature = $encrypter->base64url_decode($compactSignature);
-        $compactSignature = base64_encode($compactSignature);
+        $signature = $encrypter->base64url_decode($signature);
+        $signature = base64_encode($signature);
 
-        return (new QRCode())->render($compactReceiptData . '_' . $compactSignature);
+        return (new QRCode())->render($compactReceiptData . '_' . $signature);
     }
 
     /**
@@ -115,8 +114,9 @@ class ReceiptSigner
 
         $compactReceiptData = $signInterface->generateCompactReceiptData();
 
-        $this->signature = $signInterface->sign($compactReceiptData);
-        $this->qr = $this->generateQRCode($compactReceiptData, $this->signature);
+        $response = $signInterface->sign($compactReceiptData);
+        $this->signature = $response->getBody()->getContents();
+        $this->qr = $this->generateQRCodeString($compactReceiptData, $this->signature);
     }
 
     /**
