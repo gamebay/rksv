@@ -241,6 +241,9 @@ class ReceiptData
         foreach ($this->items as $item) {
             $taxValues[strval($item['tax'])] += $item['brutto'];
         }
+        foreach ($taxValues as $key => $taxValue) {
+            $taxValues[$key] = number_format((float)$taxValue, 2, ',', '');
+        }
 
         return $taxValues;
     }
