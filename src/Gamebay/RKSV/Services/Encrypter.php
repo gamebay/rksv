@@ -25,7 +25,7 @@ class Encrypter
      */
     public function __construct(string $encryptionKey = null)
     {
-        isset($encryptionKey) ? $this->encryptionKey = $encryptionKey : $this->encryptionKey = config('RKSV.AES-key');
+        isset($encryptionKey) ? $this->encryptionKey = $encryptionKey : $this->encryptionKey = config('RKSV.AES_key');
     }
 
     /**

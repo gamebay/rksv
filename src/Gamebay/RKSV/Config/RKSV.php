@@ -35,6 +35,6 @@ return [
      * AES key for the encryption of sales counter
      * FinanzOnline should be notified of this key
      */
-    'AES-key' => '123456789'
+    'AES_key' => env('RKSV_AES_KEY', '12345678')
 
 ];
