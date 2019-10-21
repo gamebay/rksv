@@ -25,13 +25,14 @@ class NullSignService extends BaseSignService implements SignServiceInterface
      */
     public function __construct(PrimeSignProvider $provider, ReceiptData $receiptData, string $tokenKey = null, string $taxRates = null, string $locationId = null)
     {
+        parent::__construct($provider, $receiptData, $tokenKey, $taxRates, $locationId);
+
         $salesCounterCode = SignatureType::SIGN_CODE[ReceiptSigner::NULL_SIGN_TYPE];
 
         $this->receiptData = $receiptData;
         $this->receiptData->setSalesCounter($salesCounterCode);
         $this->receiptData->setPreviousReceiptSignature($this->receiptData->getCashboxId());
 
-        parent::__construct($provider, $receiptData, $tokenKey, $taxRates, $locationId);
     }
 
 }
