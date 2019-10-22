@@ -70,9 +70,12 @@ The package will accept items, but will ignore them and overwrite with zero valu
 
 ### Contributing
 
-If you want to contribute open up a pull request and describe what the PR is adding/changing.
-
 In case you notice any bugs, open up a new issue so we can discuss it and fix it asap.
+
+Keep in mind, this is an open source project and anyone can contribute by opening up a pull reqeust so feel free to fix the bugs your selves in order to have them merged sooner.
+If you want to add a feature, please open up an issue and then we can discuss further actions. Without opening a new issue we will ignore any pull requests for new features.
+
+With new features please describe the changes you made within the pull request and place a link to an open issue which relates to your pull request.
 
 ### Liscence
 
