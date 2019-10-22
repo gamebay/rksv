@@ -14,7 +14,7 @@
         "laravel/framework": "5.5.*",
         "phpunit/phpunit": "^7"
     },
-    "license": "GNU v3.0",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Nino Korent",
