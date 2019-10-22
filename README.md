@@ -10,9 +10,9 @@ Since we wanted to be as quick as possible and use as little tools possible, we 
 What we took from them is a simple service which accepts RKSV payloads and then gives you a properly encrypted & signed response.
 Worry free and less complications with signing receipts.
 So what you need for this package to work is the following:
-- PHP/Laravel
-- PrimeSign remote signing SaaS service for RKSV (https://www.cryptoshop.com/products/zertifikate.html)
-- for example: we took this one (http://www.cryptoshop.com/products/zertifikate/rksv-primesign-remotesigning-hosted-bdl-24-7-150.html)
+- PHP/[Laravel](https://laravel.com)
+- [PrimeSign remote signing SaaS](https://www.cryptoshop.com/products/zertifikate.html) service for RKSV
+- for example: we took this [one](http://www.cryptoshop.com/products/zertifikate/rksv-primesign-remotesigning-hosted-bdl-24-7-150.html)
 
 Everything else you need for setting up the project is pretty much in the config file (RKSV.php)
 
@@ -84,8 +84,6 @@ The project is open sourced under GNU v3.0 public liscence.
 
 ### About us
 
-Gamebay is a platform for managing gaming arenas, providing full support for running games and offering cash register solution as all in one software.
-We are partners with Friendly Fire Esports arenas.
+[Gamebay](https://gamebay.io) is a platform for managing gaming arenas, providing full support for running games and offering cash register solution as all in one software.
 
-https://gamebay.io
-https://friendlyfireesports.com/en
+We are partners with [Friendly Fire Esports](https://friendlyfireesports.com/en) arenas.
