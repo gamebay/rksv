@@ -18,6 +18,8 @@ Everything else you need for setting up the project is pretty much in the config
 
 ## How it works
 
+First you have to create a receipt with data which will be used for signing
+
     $receiptData = ReceiptData::withData(
                 $receipt->cashbox->id, //cash register id
                 $receipt->cashbox->daily_income, //daily register income sum
@@ -33,21 +35,54 @@ Everything else you need for setting up the project is pretty much in the config
                         'tax' => 20 
                     ]
                 ],
-                AtFiscalization::latest('created_at')->first()->signature ?? ''
-            );
+                $receipt->previous_receipt->signature
+            ); 
+
+Using the created ReceiptData, pass it on to ReceiptSigner and call desired method for signing
+
+
             $receiptSigner = new ReceiptSigner($receiptData);
-            if ($nullSign == true) {
-                $receiptSigner->nullSign();
-            } else if ($training == true) {
-                $receiptSigner->trainingSign();
-            } else {
                 if ($this->gross > 0) $receiptSigner->normalSign();
-                if ($this->gross < 0) $receiptSigner->cancelSign();
-            }
-            $atFiscalization = new AtFiscalization();
-            $atFiscalization->invoice_id = $this->id;
-            $atFiscalization->signature = $receiptSigner->getSignature();
-            $atFiscalization->qr = $receiptSigner->getQR();
-            $atFiscalization->fiscal_at = Gamearena::currentTime();
-            $atFiscalization->save();     
-   
+
+Getting the result of signing
+
+            $signature = $receiptSigner->getSignature();
+            $QR = $receiptSigner->getQR();
+
+Beside normal signer, you can also call
+ * cancel receipt signature
+ * training receipt signature
+
+    ...
+    $receiptSigner->cancelSign();
+    ...
+    $receiptSigner->trainingSign();
+    ...
+    
+Null sign will use the cashbox ID for generating chain value.
+This is the first receipt you create when initializing receipt sequences.
+The package will accept items, but will ignore them and overwrite with zero values
+
+    ...
+    $receiptSigner->nullSign();
+    ...
+
+
+### Contributing
+
+If you want to contribute open up a pull request and describe what the PR is adding/changing.
+
+In case you notice any bugs, open up a new issue so we can discuss it and fix it asap.
+
+### Liscence
+
+The project is open sourced under GNU v3.0 public liscence.
+
+
+### About us
+
+Gamebay is a platform for managing gaming arenas, providing full support for running games and offering cash register solution as all in one software.
+We are partners with Friendly Fire Esports arenas.
+
+https://gamebay.io
+https://friendlyfireesports.com/en
