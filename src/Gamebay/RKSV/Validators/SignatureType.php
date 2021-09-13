@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Gamebay\RKSV\Validators;
 
 use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException;
 use Gamebay\RKSV\Services\ReceiptSigner;
-use Illuminate\Http\Response;
 
 /**
  * Class SignatureType
@@ -15,9 +13,9 @@ class SignatureType
 {
 
     /**
-     * @var $instanceOf
+     * @var string $instanceOf
      */
-    private $instanceOf;
+    private string $instanceOf;
 
     /** @var array containing key values for constructing valid classes */
     const SIGN_TYPE = [
@@ -44,7 +42,6 @@ class SignatureType
      */
     public function __construct(string $type)
     {
-
         if (!array_key_exists($type, self::SIGN_TYPE)) {
             throw new InvalidSignTypeException();
         }
@@ -52,9 +49,7 @@ class SignatureType
         $this->setInstanceOf(self::SIGN_TYPE[$type]);
 
         return $this;
-
     }
-
 
     /**
      * @param string $type
@@ -71,5 +66,4 @@ class SignatureType
     {
         return $this->instanceOf;
     }
-
 }

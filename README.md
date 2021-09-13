@@ -21,8 +21,8 @@ Everything else you need for setting up the project is pretty much in the config
 First you have to create a receipt with data which will be used for signing
 
     $receiptData = ReceiptData::withData(
-                $receipt->cashbox->id, //cash register id
-                $receipt->cashbox->daily_income, //daily register income sum
+                $receipt->cashBoxId->id, //cash register id
+                $receipt->cashBoxId->daily_income, //daily register income sum
                 $receipt->number, //receipt number
                 \DateTime::createFromFormat('Y-m-d H:i:s', $receipt->created_at),
                 [
@@ -59,7 +59,7 @@ Beside normal signer, you can also call
     $receiptSigner->trainingSign();
     ...
     
-Null sign will use the cashbox ID for generating chain value.
+Null sign will use the cashBoxId ID for generating chain value.
 This is the first receipt you create when initializing receipt sequences.
 The package will accept items, but will ignore them and overwrite with zero values
 

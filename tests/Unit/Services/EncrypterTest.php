@@ -1,14 +1,11 @@
 <?php
 
-
 use Gamebay\RKSV\Services\Encrypter;
 use Gamebay\RKSV\Models\ReceiptData;
 use PHPUnit\Framework\TestCase;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class EncrypterTest extends TestCase
 {
-
     public function testEncryptSalesCounter()
     {
         $salesCounter = '12345';

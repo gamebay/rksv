@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Gamebay\RKSV\ErrorHandlers\Exceptions;
-
 
 /**
  * Class RksvException

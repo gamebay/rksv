@@ -1,9 +1,8 @@
 <?php
 
-
 namespace Gamebay\RKSV\Services\SignServices;
 
-
+use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidItemException;
 use Gamebay\RKSV\Models\ReceiptData;
 use Gamebay\RKSV\Providers\PrimeSignProvider;
 use Gamebay\RKSV\Services\ReceiptSigner;
@@ -19,13 +18,21 @@ class NullSignService extends BaseSignService implements SignServiceInterface
      * NullSignService constructor.
      * @param PrimeSignProvider $provider
      * @param ReceiptData $receiptData
-     * @param string|null $tokenKey
-     * @param string|null $taxRates
-     * @param string|null $locationId
+     * @param string $encryptionKey
+     * @param string $tokenKey
+     * @param array $taxRates
+     * @param string $locationId
+     * @throws InvalidItemException
      */
-    public function __construct(PrimeSignProvider $provider, ReceiptData $receiptData, string $tokenKey = null, string $taxRates = null, string $locationId = null)
-    {
-        parent::__construct($provider, $receiptData, $tokenKey, $taxRates, $locationId);
+    public function __construct(
+        PrimeSignProvider $provider,
+        ReceiptData $receiptData,
+        string $encryptionKey,
+        string $tokenKey,
+        array $taxRates,
+        string $locationId
+    ) {
+        parent::__construct($provider, $receiptData, $encryptionKey, $tokenKey, $taxRates, $locationId);
 
         $salesCounterCode = SignatureType::SIGN_CODE[ReceiptSigner::NULL_SIGN_TYPE];
 
@@ -37,10 +44,7 @@ class NullSignService extends BaseSignService implements SignServiceInterface
         $this->receiptData = $receiptData;
 
         $this->receiptData->setItems($nullItem);
-
         $this->receiptData->setSalesCounter($salesCounterCode);
         $this->receiptData->setPreviousReceiptSignature($this->receiptData->getCashboxId());
-
     }
-
 }

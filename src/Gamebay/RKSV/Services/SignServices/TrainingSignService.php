@@ -1,13 +1,10 @@
 <?php
 
-
 namespace Gamebay\RKSV\Services\SignServices;
-
 
 use Gamebay\RKSV\Models\ReceiptData;
 use Gamebay\RKSV\Providers\PrimeSignProvider;
 use Gamebay\RKSV\Services\ReceiptSigner;
-use GuzzleHttp\Psr7\Request;
 use Gamebay\RKSV\Validators\SignatureType;
 
 /**
@@ -16,23 +13,29 @@ use Gamebay\RKSV\Validators\SignatureType;
  */
 class TrainingSignService extends BaseSignService implements SignServiceInterface
 {
-
     /**
      * TrainingSignService constructor.
      * @param PrimeSignProvider $provider
      * @param ReceiptData $receiptData
-     * @param string|null $tokenKey
-     * @param string|null $taxRates
-     * @param string|null $locationId
+     * @param string $encryptionKey
+     * @param string $tokenKey
+     * @param array $taxRates
+     * @param string $locationId
      */
-    public function __construct(PrimeSignProvider $provider, ReceiptData $receiptData, string $tokenKey = null, string $taxRates = null, string $locationId = null)
+    public function __construct(
+        PrimeSignProvider $provider,
+        ReceiptData $receiptData,
+        string $encryptionKey,
+        string $tokenKey,
+        array $taxRates,
+        string $locationId
+    )
     {
-        parent::__construct($provider, $receiptData, $tokenKey, $taxRates, $locationId);
+        parent::__construct($provider, $receiptData, $encryptionKey, $tokenKey, $taxRates, $locationId);
 
         $salesCounterCode = SignatureType::SIGN_CODE[ReceiptSigner::TRAINING_SIGN_TYPE];
 
         $this->receiptData = $receiptData;
         $this->receiptData->setSalesCounter($salesCounterCode);
     }
-
 }

@@ -1,10 +1,6 @@
 <?php
 
-
 namespace Gamebay\RKSV\ErrorHandlers\Exceptions;
-
-
-use Illuminate\Http\Response;
 
 /**
  * Class NoReceiptDataException
@@ -16,14 +12,15 @@ class NoReceiptDataException extends RksvException
 
     /**
      * NoReceiptDataException constructor.
-     * @param $message
+     * @param string $message
      * @param int $code
      * @param null $previous
      */
-    public function __construct($message = self::MESSAGE,
-                                $code = Response::HTTP_UNPROCESSABLE_ENTITY,
-                                $previous = null)
-    {
+    public function __construct(
+        string $message = self::MESSAGE,
+        $code = 422,
+        $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
     }
 }
