@@ -16,18 +16,17 @@ use Gamebay\RKSV\Validators\SignatureType;
  */
 class ReceiptSigner
 {
-    private $receiptData;
-    private $signature;
-    private $qr;
+    private ReceiptData $receiptData;
+    private ?string $signature;
+    private ?string $qr;
 
-    private $primeSignBaseCertificateURL;
-    private $primeSignReceiptSignURL;
-    private $primeSignTokenKey;
-    private $primeSignCertificateNumber;
-    private $encryptionKey;
-    private $tokenKey;
-    private $taxRates;
-    private $locationId;
+    private string $primeSignBaseCertificateURL;
+    private string $primeSignReceiptSignURL;
+    private string $primeSignTokenKey;
+    private string $primeSignCertificateNumber;
+    private string $encryptionKey;
+    private array $taxRates;
+    private string $locationId;
 
     const NORMAL_SIGN_TYPE = 'normal';
     const CANCEL_SIGN_TYPE = 'storno';
@@ -41,7 +40,6 @@ class ReceiptSigner
      * @param string $primeSignTokenKey
      * @param string $primeSignCertificateNumber
      * @param string $encryptionKey
-     * @param string $tokenKey
      * @param array $taxRates
      * @param string $locationId
      * @param ReceiptData|null $receiptData
@@ -52,7 +50,6 @@ class ReceiptSigner
         string $primeSignTokenKey,
         string $primeSignCertificateNumber,
         string $encryptionKey,
-        string $tokenKey,
         array $taxRates,
         string $locationId,
         ReceiptData $receiptData = null
@@ -63,7 +60,6 @@ class ReceiptSigner
         $this->primeSignTokenKey = $primeSignTokenKey;
         $this->primeSignCertificateNumber = $primeSignCertificateNumber;
         $this->encryptionKey = $encryptionKey;
-        $this->tokenKey = $tokenKey;
         $this->taxRates = $taxRates;
         $this->locationId = $locationId;
         if ($receiptData != null) {
@@ -79,7 +75,7 @@ class ReceiptSigner
      * @throws NoReceiptDataException
      * @throws InvalidSignTypeException
      */
-    public function getSignService(string $signType)
+    public function getSignService(string $signType): SignServices\SignServiceInterface
     {
         $this->isReceiptDataSet($this->receiptData);
 
@@ -90,7 +86,6 @@ class ReceiptSigner
             $this->primeSignReceiptSignURL,
             $this->primeSignTokenKey,
             $this->encryptionKey,
-            $this->tokenKey,
             $this->taxRates,
             $this->locationId
         );
@@ -105,7 +100,7 @@ class ReceiptSigner
      * @param string $signature
      * @return string
      */
-    public function generateQRCodeString(string $compactReceiptData, string $signature)
+    public function generateQRCodeString(string $compactReceiptData, string $signature): string
     {
         $encrypter = new Encrypter('AES-key-123');
 
@@ -173,19 +168,17 @@ class ReceiptSigner
     }
 
     /**
-     * @param ReceiptData $receiptData
-     * @return ReceiptData
+     * @param ReceiptData|null $receiptData
+     * @return void
      * @throws NoReceiptDataException
      */
-    private function isReceiptDataSet(ReceiptData $receiptData = null): ReceiptData
+    private function isReceiptDataSet(ReceiptData $receiptData = null): void
     {
         $receiptData ?: $receiptData = $this->receiptData;
 
         if (null === $receiptData) {
             throw new NoReceiptDataException();
         }
-
-        return $receiptData;
     }
 
     /**
@@ -199,7 +192,7 @@ class ReceiptSigner
     /**
      * @return ReceiptData
      */
-    public function getReceiptData()
+    public function getReceiptData(): ReceiptData
     {
         return $this->receiptData;
     }
@@ -207,7 +200,7 @@ class ReceiptSigner
     /**
      * @return null|string
      */
-    public function getSignature()
+    public function getSignature(): ?string
     {
         return $this->signature;
     }
@@ -215,7 +208,7 @@ class ReceiptSigner
     /**
      * @return null|string
      */
-    public function getQR()
+    public function getQR(): ?string
     {
         return $this->qr;
     }

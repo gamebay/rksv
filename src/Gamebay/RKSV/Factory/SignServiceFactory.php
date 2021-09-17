@@ -39,7 +39,6 @@ class SignServiceFactory implements SignServiceFactoryInterface
      * @param string $primeSignReceiptSignURL
      * @param string $primeSignTokenKey
      * @param string $encryptionKey
-     * @param string $tokenKey
      * @param array $taxRates
      * @param string $locationId
      */
@@ -49,7 +48,6 @@ class SignServiceFactory implements SignServiceFactoryInterface
         string $primeSignReceiptSignURL,
         string $primeSignTokenKey,
         string $encryptionKey,
-        string $tokenKey,
         array $taxRates,
         string $locationId
     ) {
@@ -60,7 +58,7 @@ class SignServiceFactory implements SignServiceFactoryInterface
         );
         $this->receiptData = $receiptData;
         $this->encryptionKey = $encryptionKey;
-        $this->tokenKey = $tokenKey;
+        $this->tokenKey = $primeSignTokenKey;
         $this->taxRates = $taxRates;
         $this->locationId = $locationId;
     }
