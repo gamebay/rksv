@@ -1,18 +1,15 @@
 {
     "name": "gamebay/rksv",
-
     "description": "Austrian RKSV implementation with PrimeSign online certificate signing service",
     "type": "library",
     "require": {
-        "php": ">=7.2.0",
-        "guzzlehttp/guzzle": "^6.3",
-        "illuminate/support": "5.5.*",
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7",
         "chillerlan/php-qrcode": "^3.1.1",
         "ext-openssl": "*"
     },
     "require-dev": {
-        "laravel/framework": "5.5.*",
-        "phpunit/phpunit": "^7"
+        "phpunit/phpunit": "^8"
     },
     "license": "GPL-3.0-or-later",
     "authors": [
@@ -23,6 +20,10 @@
         {
             "name": "Sandro Lovnički",
             "email": "sandro.lovnicki@gamebay.io"
+        },
+        {
+            "name": "Toni Krešić",
+            "email": "toni.kresic@gamebay.io"
         }
     ],
     "autoload": {

@@ -1,10 +1,6 @@
 <?php
 
-
 namespace Gamebay\RKSV\Providers;
-
-
-use GuzzleHttp\Client;
 
 /**
  * Class PrimeSignProvider
@@ -13,25 +9,27 @@ use GuzzleHttp\Client;
 class PrimeSignProvider
 {
     /** @var string $baseUrl */
-    public $baseUrl;
+    public string $baseUrl;
 
     /** @var string $signUrl */
-    public $signUrl;
+    public string $signUrl;
 
     /** @var string $fullSignatureUrl */
-    public $fullSignerUrl;
+    public string $fullSignerUrl;
 
     /** @var string $apiTokenKey */
-    public $apiTokenKey;
+    public string $apiTokenKey;
 
-    public function __construct()
+    public function __construct(
+        string $primeSignBaseCertificateURL,
+        string $primeSignReceiptSignURL,
+        string $primeSignTokenKey
+    )
     {
-        $this->baseUrl = config('RKSV.rksv_primesign_base_certificate_url');
-        $this->signUrl = config('RKSV.rksv_primesign_receipt_sign_url');
+        $this->baseUrl = $primeSignBaseCertificateURL;
+        $this->signUrl = $primeSignReceiptSignURL;
         $this->fullSignerUrl = $this->baseUrl . $this->signUrl;
-
-        $this->apiTokenKey = config('RKSV.rksv_primesign_token_key');
-
+        $this->apiTokenKey = $primeSignTokenKey;
     }
 
     /**

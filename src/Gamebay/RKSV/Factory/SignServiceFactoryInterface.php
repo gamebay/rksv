@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Gamebay\RKSV\Factory;
-
 
 use Gamebay\RKSV\Validators\SignatureType;
 

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Gamebay\RKSV\Factory;
 
 use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidSignTypeException;
@@ -15,21 +14,53 @@ use Gamebay\RKSV\Validators\SignatureType;
  */
 class SignServiceFactory implements SignServiceFactoryInterface
 {
-
     /** @var PrimeSignProvider $provider */
-    private $provider;
+    private PrimeSignProvider $provider;
 
     /** @var ReceiptData */
-    private $receiptData;
+    private ReceiptData $receiptData;
+
+    /** @var string */
+    private string $encryptionKey;
+
+    /** @var string */
+    private string $tokenKey;
+
+    /** @var array */
+    private array $taxRates;
+
+    /** @var string */
+    private string $locationId;
 
     /**
      * SignServiceFactory constructor.
      * @param ReceiptData $receiptData
+     * @param string $primeSignBaseCertificateURL
+     * @param string $primeSignReceiptSignURL
+     * @param string $primeSignTokenKey
+     * @param string $encryptionKey
+     * @param array $taxRates
+     * @param string $locationId
      */
-    public function __construct(ReceiptData $receiptData)
-    {
-        $this->provider = new PrimeSignProvider();
+    public function __construct(
+        ReceiptData $receiptData,
+        string $primeSignBaseCertificateURL,
+        string $primeSignReceiptSignURL,
+        string $primeSignTokenKey,
+        string $encryptionKey,
+        array $taxRates,
+        string $locationId
+    ) {
+        $this->provider = new PrimeSignProvider(
+            $primeSignBaseCertificateURL,
+            $primeSignReceiptSignURL,
+            $primeSignTokenKey
+        );
         $this->receiptData = $receiptData;
+        $this->encryptionKey = $encryptionKey;
+        $this->tokenKey = $primeSignTokenKey;
+        $this->taxRates = $taxRates;
+        $this->locationId = $locationId;
     }
 
     /**
@@ -42,15 +73,17 @@ class SignServiceFactory implements SignServiceFactoryInterface
         $classTarget = 'Gamebay\RKSV\Services\SignServices\\' . $signatureType->getInstanceOf() . 'SignService';
 
         if (!\class_exists($classTarget)) {
-
             throw new InvalidSignTypeException();
         }
 
         /** @var SignServiceInterface $signService */
-        $signService = new $classTarget($this->provider, $this->receiptData);
-
-        return $signService;
-
+        return new $classTarget(
+            $this->provider,
+            $this->receiptData,
+            $this->encryptionKey,
+            $this->tokenKey,
+            $this->taxRates,
+            $this->locationId
+        );
     }
-
 }

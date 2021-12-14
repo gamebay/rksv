@@ -1,6 +1,5 @@
 <?php
 
-
 use Gamebay\RKSV\Models\ReceiptData;
 use Gamebay\RKSV\Services\Encrypter;
 use Gamebay\RKSV\Services\ReceiptSigner;
@@ -54,7 +53,28 @@ class ReceiptSignerTest extends TestCase
 
         $receiptData = ReceiptData::withData('1', '2000', '01', new DateTime('2019-10-17 14:52:20'), $items, '123123');
 
-        $receiptSigner = new ReceiptSigner($receiptData);
+        // TODO => Add values in order for test to work
+        $primeSignBaseCertificateURL = 'rksv_primesign_base_certificate_url';
+        $primeSignReceiptSignURL = 'rksv_primesign_receipt_sign_url';
+        $primeSignTokenKey = 'rksv_primesign_token_key';
+        $encryptionKey = 'AES_key';
+        $primeSignCertificateNumber = 'RKSV_PRIMESIGN_CERTIFICATE_NUMBER';
+        $tokenKey = 'rksv_primesign_token_key';
+        $taxRates = ['20','10','13','0','special'];
+        $locationId = 'rksv_primesign_location_id';
+
+        $receiptSigner = new ReceiptSigner(
+            $primeSignBaseCertificateURL,
+            $primeSignReceiptSignURL,
+            $primeSignTokenKey,
+            $primeSignCertificateNumber,
+            $encryptionKey,
+            $tokenKey,
+            $taxRates,
+            $locationId,
+            $receiptData
+        );
+
         $receiptSigner->trainingSign();
 
         echo "\n\ntraining test signature: \n\n" . $receiptSigner->getSignature();

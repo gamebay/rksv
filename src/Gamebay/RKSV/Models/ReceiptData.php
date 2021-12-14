@@ -1,9 +1,8 @@
 <?php
 
-
 namespace Gamebay\RKSV\Models;
 
-
+use DateTime;
 use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidItemException;
 
 /**
@@ -12,23 +11,23 @@ use Gamebay\RKSV\ErrorHandlers\Exceptions\InvalidItemException;
  */
 class ReceiptData
 {
-    /** @var string $cashboxId */
-    private $cashboxId;
+    /** @var string $cashBoxId */
+    private string $cashBoxId;
 
     /** @var string $salesCounter */
-    private $salesCounter;
+    private string $salesCounter;
 
     /** @var string $receiptId */
-    private $receiptId;
+    private string $receiptId;
 
-    /** @var \DateTime $receiptTimestamp */
-    private $receiptTimestamp;
+    /** @var DateTime $receiptTimestamp */
+    private DateTime $receiptTimestamp;
 
     /** @var array $items */
-    private $items;
+    private array $items;
 
     /** @var string $previousReceiptSignature */
-    private $previousReceiptSignature;
+    private string $previousReceiptSignature;
 
     /**
      * ReceiptData constructor.
@@ -41,26 +40,27 @@ class ReceiptData
     /**
      * Construct ReceiptData with provided data
      *
-     * @param string $cashboxId
+     * @param string $cashBoxId
      * @param string $salesCounter
      * @param string $receiptId
-     * @param \DateTime $receiptTimestamp
+     * @param DateTime $receiptTimestamp
      * @param array $items
      * @param string $previousReceiptSignature
      * @return ReceiptData
      * @throws InvalidItemException
      */
     public static function withData(
-        string $cashboxId,
+        string $cashBoxId,
         string $salesCounter,
         string $receiptId,
-        \DateTime $receiptTimestamp,
+        DateTime $receiptTimestamp,
         array $items,
         string $previousReceiptSignature
-    ) {
+    ): ReceiptData
+    {
         $receiptData = new self();
 
-        $receiptData->cashboxId = $cashboxId;
+        $receiptData->cashBoxId = $cashBoxId;
         $receiptData->salesCounter = $salesCounter;
         $receiptData->receiptId = $receiptId;
         $receiptData->receiptTimestamp = $receiptTimestamp;
@@ -104,17 +104,17 @@ class ReceiptData
     /**
      * @param string $id
      */
-    public function setCashboxId(string $id)
+    public function setCashBoxId(string $id)
     {
-        $this->cashboxId = $id;
+        $this->cashBoxId = $id;
     }
 
     /**
      * @return string
      */
-    public function getCashboxId()
+    public function getCashBoxId(): string
     {
-        return $this->cashboxId;
+        return $this->cashBoxId;
     }
 
     /**
@@ -128,7 +128,7 @@ class ReceiptData
     /**
      * @return string
      */
-    public function getSalesCounter()
+    public function getSalesCounter(): string
     {
         return $this->salesCounter;
     }
@@ -144,23 +144,23 @@ class ReceiptData
     /**
      * @return string
      */
-    public function getReceiptId()
+    public function getReceiptId(): string
     {
         return $this->receiptId;
     }
 
     /**
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      */
-    public function setReceiptTimestamp(\DateTime $timestamp)
+    public function setReceiptTimestamp(DateTime $timestamp)
     {
-        $this->receiptTimestamp = $timestamp->format('Y-m-d\TH:i:s');
+        $this->receiptTimestamp = $timestamp;
     }
 
     /**
      * @return string
      */
-    public function getReceiptTimestamp()
+    public function getReceiptTimestamp(): string
     {
         return $this->receiptTimestamp->format('Y-m-d\TH:i:s');
     }
@@ -182,16 +182,16 @@ class ReceiptData
     /**
      * @return array
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->items;
     }
 
     /**
-     * Add an item with $net,$tax to the $items list
+     * Add an item with $brutto, $tax to the $items list.
      *
-     * @param float $net
-     * @param float $tax
+     * @param float $brutto
+     * @param int $tax
      *
      * @throws InvalidItemException
      */
@@ -209,9 +209,10 @@ class ReceiptData
     }
 
     /**
-     * Remove item with specified $net,$tax from the $items list
-     * @param $net
-     * @param $tax
+     * Remove item with specified $brutto, $tax from the $items list.
+     *
+     * @param float $brutto
+     * @param int $tax
      */
     public function removeItem(float $brutto, int $tax)
     {
@@ -228,16 +229,17 @@ class ReceiptData
     }
 
     /**
-     * Sums the items' brutto values into tax groups given
+     * Sums the items' brutto values into tax groups given.
+     *
      * @param array $taxes
      * @return array
      */
-    public function sumItemsByTaxes(array $taxes)
+    public function sumItemsByTaxes(array $taxes): array
     {
         $zeros = array_fill(0, count($taxes), 0);
         $taxValues = array_combine($taxes, $zeros);
 
-        // TODO handle 'special' without referencing 'special'
+        // TODO => Handle 'special' without referencing 'special'
         foreach ($this->items as $item) {
             $taxValues[strval($item['tax'])] += $item['brutto'];
         }
@@ -259,7 +261,7 @@ class ReceiptData
     /**
      * @return string
      */
-    public function getPreviousReceiptSignature()
+    public function getPreviousReceiptSignature(): string
     {
         return $this->previousReceiptSignature;
     }
