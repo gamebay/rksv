@@ -102,7 +102,7 @@ class ReceiptSigner
      */
     public function generateQRCodeString(string $compactReceiptData, string $signature): string
     {
-        $encrypter = new Encrypter('AES-key-123');
+        $encrypter = new Encrypter($this->encryptionKey);
 
         $signature = $encrypter->base64url_decode($signature);
         $signature = base64_encode($signature);
