@@ -39,15 +39,15 @@ class NullSignService extends BaseSignService implements SignServiceInterface
     $nullItem = [
       [
         'brutto' => 0,
-        'tax' => 20,
+        'tax' => 0,
       ]
     ];
 
     $this->receiptData = $receiptData;
 
     $this->receiptData->setItems($nullItem);
-    $this->receiptData->setSalesCounter($salesCounterCode);
-    $this->receiptData->setPreviousReceiptSignature($this->receiptData->getCashboxId());
+    $this->receiptData->setSalesCounter($salesCounterCode);  // should be 0 for zero reciept
+    $this->receiptData->setPreviousReceiptSignature($this->receiptData->getCashboxId()); // signature here should be cahbox id as it is zero reciept
   }
 }
 

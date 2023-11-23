@@ -110,6 +110,21 @@ class ReceiptSigner
         return (new QRCode())->render($compactReceiptData . '_' . $signature);
     }
 
+
+    public function extractSignatureForQRCode($jws) {
+        // Split the JWS into its three parts
+        $jwsParts = explode('.', $jws);
+    
+        // Check if the JWS has three parts (header, payload, signature)
+        if (count($jwsParts) !== 3) {
+            throw new Exception("Invalid JWS: The token does not have three parts.");
+        }
+        // The signature is the third part of the JWS and is already in Base64Url format
+        $signature = $jwsParts[2];    
+        // Return the signature part of the JWS
+        return $signature;
+    }
+
     /**
      * Signs the receiptData with appropriate signer, generates signature and QR code.
      * @param string $signType
@@ -124,7 +139,8 @@ class ReceiptSigner
 
         $response = $signInterface->sign($compactReceiptData);
         $this->signature = $response->getBody()->getContents();
-        $this->qr = $this->generateQRCodeString($compactReceiptData, $this->signature);
+        $qr_signature = $this->extractSignatureForQRCode($this->signature);
+        $this->qr = $this->generateQRCodeString($compactReceiptData, $qr_signature);
     }
 
     /**
