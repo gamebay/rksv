@@ -1,11 +1,15 @@
-# Austrian cash register fiscalization
+# (Under development) Austrian cash register fiscalization
+
+**STILL UNDER ACTIVE DEVELOPMENT AND SHOULD NOT BE USED IN PRODUCTION**
+
+
+------
+
+
 In Austria the fiscalization process is called Registrierkassensicherheitsverordnung (RKSV).
-As we at Gamebay found out, it is rather difficult to follow the process of fiscalization when almost everything is in German.
 
-Despite that we found a few repositories which made similar implementation BUT either weren't maintained anymore OR were not for PHP.
-We had to do it our selves but then decided it would be of greater purpose (and probably fewer bugs) if we open source it and let everyone know how the process goes.
 
-Since we wanted to be as quick as possible and use as little tools possible, we found about PrimeSign online sign feature.
+In this repository, we use about PrimeSign online sign feature.
 
 What we took from them is a simple service which accepts RKSV payloads and then gives you a properly encrypted & signed response.
 Worry free and fewer complications with signing receipts.

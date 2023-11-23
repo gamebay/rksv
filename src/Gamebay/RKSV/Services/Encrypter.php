@@ -33,54 +33,16 @@ class Encrypter
      */
     public function encryptSalesCounter(ReceiptData $receiptData): string
     {
-        $algorithm = 'aes-256-ctr';
-
         $cashBoxId = $receiptData->getCashboxId();
         $receiptId = $receiptData->getReceiptId();
         $salesCounter = $receiptData->getSalesCounter();
 
-        $option = OPENSSL_NO_PADDING;
-
-        /**
-         * @var string $iv
-         * Initialization vector which is taken for AES-256-CTR encryption
-         * The encryption method expects blocks of 16 bytes, so first 16 chars are taken from IV hash value
-         */
-        $iv = hash('sha256', $cashBoxId . $receiptId);
-        $iv = substr($iv, 0, 16);
-
-        /**
-         * https://www.php.net/manual/en/function.pack.php
-         * pack - Pack data into binary string
-         * J - unsigned long long (always 64 bit, big endian byte order)
-         *
-         * https://www.php.net/manual/en/function.unpack.php
-         * unpack - unpack — Unpack data from binary string
-         * C - unsigned char
-         *
-         * The resulting is array of 8 bytes
-         */
-        $salesCounterBigEndianByteArray = unpack("C*", pack('J', intval($salesCounter)));
-
-        /**
-         * Initialization of 8 byte array filled with zeros which is needed for the encryption
-         */
-        $restByteZeroArray = array_fill(0, 8, 0);
-
-        /**
-         * Creating a 16 byte array which is needed for the encryption (which expects blocks of 16 bytes)
-         */
-        $codedSalesCounterArray = array_merge($salesCounterBigEndianByteArray, $restByteZeroArray);
-
-        $codedSalesCounterString = implode(array_map('chr', $codedSalesCounterArray));
-
-        /**
-         * @var string $encryptedSalesCounter
-         * Finally encryption is done with the above prepared string
-         */
-        $encryptedSalesCounter = openssl_encrypt($codedSalesCounterString, $algorithm, $this->encryptionKey, $option, $iv);
-
-        return base64_encode(substr($encryptedSalesCounter, 0, 8));
+        $bin = pack('J', intval($salesCounter * 100));
+        $iv = substr(hash('sha256', $cashBoxId . $receiptId, true), 0, 16);    
+        $encryptedValue = openssl_encrypt($bin, 'AES-256-CTR', $this->encryptionKey, 0, $iv);
+    
+        // Return the encrypted value directly, without additional processing (base64 encoded).
+        return $encryptedValue;
     }
 
     /**
@@ -89,7 +51,10 @@ class Encrypter
      */
     public function getCompactSignature(string $signature)
     {
-        return substr(hash('sha256', $signature), 0, 8);
+        $hash = hash('sha256', $signature, true);
+        $first8Bytes = substr($hash, 0, 8);
+        $valueBase64 = base64_encode($first8Bytes);
+        return $valueBase64;
     }
 
     /**
