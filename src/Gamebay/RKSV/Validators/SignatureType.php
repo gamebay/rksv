@@ -28,9 +28,9 @@ class SignatureType
     /** @var array containing values for generating receipts which aren't normally chained */
     const SIGN_CODE = [
         //storno
-        ReceiptSigner::CANCEL_SIGN_TYPE => 'U1RP',
+        ReceiptSigner::CANCEL_SIGN_TYPE => 'U1RP',  // base64 encoding of the word STO
         //training
-        ReceiptSigner::TRAINING_SIGN_TYPE => 'VFJB',
+        ReceiptSigner::TRAINING_SIGN_TYPE => 'VFJB',  //base64 encoding of the word TRA
         //first receipt
         ReceiptSigner::NULL_SIGN_TYPE => '0',
     ];

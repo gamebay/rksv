@@ -20,5 +20,5 @@ interface SignServiceInterface
      * @param string $primeSignCertificateNumber
      * @return string
      */
-    public function generateCompactReceiptData(string $primeSignCertificateNumber): string;
+    public function generateCompactReceiptData(string $primeSignCertificateNumber, string $salesCounterType='normal'): string;
 }

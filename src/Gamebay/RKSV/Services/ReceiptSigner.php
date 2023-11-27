@@ -135,7 +135,16 @@ class ReceiptSigner
     {
         $signInterface = $this->getSignService($signType);
 
-        $compactReceiptData = $signInterface->generateCompactReceiptData($this->primeSignCertificateNumber);
+
+        if ($signType == self::CANCEL_SIGN_TYPE){
+            $compactReceiptData = $signInterface->generateCompactReceiptData($this->primeSignCertificateNumber, 'U1RP'); // todo dont hardcode this
+        }
+        elseif ($signType == self::TRAINING_SIGN_TYPE){
+            $compactReceiptData = $signInterface->generateCompactReceiptData($this->primeSignCertificateNumber, 'VFJB'); // todo dont hardcode this
+        } else {
+            $compactReceiptData = $signInterface->generateCompactReceiptData($this->primeSignCertificateNumber, 'normal');
+        } // todo add also for null-reciept
+
 
         $response = $signInterface->sign($compactReceiptData);
         $this->signature = $response->getBody()->getContents();
