@@ -82,15 +82,24 @@ class BaseSignService
      */
     public function generateCompactReceiptData(string $primeSignCertificateNumber, string $salesCounterType='normal'): string
     {
-        $taxValues = implode('_', $this->receiptData->sumItemsByTaxes($this->taxRates));
-     
-
         if ($salesCounterType == 'normal') {
-            $encryptedSalesCounter = $this->encrypter->encryptSalesCounter($this->receiptData);
-        } else {
+            $encryptedSalesCounter = $this->encrypter->encryptSalesCounter($this->receiptData);        
+        } else if ($salesCounterType == 'null') {
+            $nullItem = [
+                [
+                  'brutto' => 0,
+                  'tax' => 0
+                ]
+            ];
+            $this->receiptData->setItems($nullItem);
+            $this->receiptData->setSalesCounter(0.00);
+            $this->receiptData->setPreviousReceiptSignature($this->receiptData->getCashboxId());
+            $encryptedSalesCounter = $this->encrypter->encryptSalesCounter($this->receiptData);        
+        } else {  // if training or storno
             $encryptedSalesCounter = $salesCounterType;
         }
 
+        $taxValues = implode('_', $this->receiptData->sumItemsByTaxes($this->taxRates));
         $previousCompactSignature = $this->encrypter->getCompactSignature($this->receiptData->getPreviousReceiptSignature());
 
         return '_R1-' . $this->locationId .

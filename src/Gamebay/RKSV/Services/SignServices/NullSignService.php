@@ -34,18 +34,16 @@ class NullSignService extends BaseSignService implements SignServiceInterface
   ) {
     parent::__construct($provider, $receiptData, $encryptionKey, $tokenKey, $taxRates, $locationId);
 
-    // $salesCounterCode = SignatureType::SIGN_CODE[ReceiptSigner::NULL_SIGN_TYPE]; // should return 0
-
-    // $nullItem = [
-    //   [
-    //     'brutto' => 0,
-    //     'tax' => 0,
-    //   ]
-    // ];
+    $nullItem = [
+      [
+        'brutto' => 0,
+        'tax' => 0
+      ]
+    ];
 
     $this->receiptData = $receiptData;
 
-    // $this->receiptData->setItems($nullItem);
+    $this->receiptData->setItems($nullItem);
     $this->receiptData->setSalesCounter(0.00);  // should be 0 for zero reciept, same as SignatureType::SIGN_CODE[ReceiptSigner::NULL_SIGN_TYPE]
     $this->receiptData->setPreviousReceiptSignature($this->receiptData->getCashboxId()); // signature here should be cahbox id as it is zero reciept
   }
