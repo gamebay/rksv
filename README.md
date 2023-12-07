@@ -2,6 +2,20 @@
 
 
 **Please be aware this repository is still under active development** if you plan to use it in a production environment.
+Updating this package works like this:
+- commit
+- push to master
+- create tag
+- push tag
+- webhook is triggered to send tag to PHP packages repo
+- convert tag to release - exampple github action is on other repos
+
+
+Other repos using this one will need to update their packages entry to use latest version.
+
+
+------
+
 
 
 In Austria the fiscalization process is called Registrierkassensicherheitsverordnung (RKSV).
