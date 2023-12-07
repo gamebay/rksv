@@ -2,20 +2,6 @@
 
 
 **Please be aware this repository is still under active development** if you plan to use it in a production environment.
-Updating this package works like this:
-- commit
-- push to master
-- create tag
-- push tag
-- webhook is triggered to send tag to PHP packages repo
-- convert tag to release - exampple github action is on other repos
-
-
-Other repos using this one will need to update their packages entry to use latest version.
-
-
-------
-
 
 
 In Austria the fiscalization process is called Registrierkassensicherheitsverordnung (RKSV).
@@ -110,7 +96,7 @@ With new features please describe the changes you made within the pull request a
 The project is open sourced under GNU v3.0 public licence.
 
 
-### TODO
+### TODO and general
 
 - implement proper unit tests which should cover hashing, encryption, qr code generation and other major-impact topics
 - implement proper unit tests for entire process - normal sign, training sign and cancel sign + chaining of all those
@@ -120,6 +106,18 @@ The project is open sourced under GNU v3.0 public licence.
 - revise all exeptions and poperly test them via unit tests
 - revise all validators and see on what are needed and which can be added
 - expand on info on how to incorporate into other peojects (if needed, discuss)
+
+
+Updating this package works like this:
+- commit
+- push to master
+- create tag
+- push tag
+- webhook is triggered to send tag to PHP packages repo
+- convert tag to release - example github action is on other repos
+
+
+Other repos using this one will need to update their packages entry to use latest version.
 
 
 ### About us
