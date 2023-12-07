@@ -35,7 +35,6 @@ class BaseSignService
     protected string $locationId;
 
     /**
-     * CancelSignService constructor.
      * @param PrimeSignProvider $provider
      * @param ReceiptData $receiptData
      * @param string $encryptionKey

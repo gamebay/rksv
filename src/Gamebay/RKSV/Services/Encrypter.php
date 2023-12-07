@@ -28,8 +28,6 @@ class Encrypter
     /**
      * @param ReceiptData $receiptData
      * @return string
-     * Return will be given in base64 format of the encrypted string,
-     * but only the first 8 characters are taken into base64 conversion
      */
     public function encryptSalesCounter(ReceiptData $receiptData): string
     {
